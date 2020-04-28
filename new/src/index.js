@@ -7,24 +7,18 @@ import App from "./App";
 import store from "./redux/store";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-//LOGIN MODAL CSS
-import "./assets/css/login.css";
+import "./assets/scss/default.scss";
+import "./assets/css/loading.css";
 
 //LOGIN AUTH0
 import { Auth0Provider } from "./hooks/auth0";
-import history from "./utils/history";
-const onRedirectCallback = (appState) => {
-	history.push(
-		appState && appState.targetUrl
-			? appState.targetUrl
-			: window.location.pathname
-	);
-};
-const config = {
-	domain: "YOUR_DOMAIN",
-	clientId: "YOUR_CLIENT_ID",
-};
+import { config, onRedirectCallback } from "./constants/auth0";
 //LOGIN AUTH0
+
+//GRAPHQL
+import { client } from "./constants/graphql";
+import { ApolloProvider } from "@apollo/react-hooks";
+//GRAPHQL
 
 ReactDOM.render(
 	<Provider store={store}>
@@ -34,7 +28,9 @@ ReactDOM.render(
 			redirect_uri={window.location.origin}
 			onRedirectCallback={onRedirectCallback}
 		>
-			<App />
+			<ApolloProvider client={client}>
+				<App />
+			</ApolloProvider>
 		</Auth0Provider>
 	</Provider>,
 	document.getElementById("root")

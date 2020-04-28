@@ -1,34 +1,33 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
+import PrivateRoute from './components/PrivateRoute';
 import { useDispatch } from "react-redux";
 
-import NavBar from "./views/NavBar";
+import NavBar from "./views/NavBar/NavBar";
 import ModalRoot from "./components/Modal/ModalRoot";
 
-import { useAuth0 } from './hooks/auth0';
+import history from './utils/history';
 
-import Home from "./views/Home/index";
-import AuthClient from "./views/AuthClient/index";
-import NoMatch from "./views/NoMatch/index";
+import Home from "./views/Home/Home";
+import Profile from "./views/Profile/Profile";
+import Orders from "./views/Orders/Orders";
+import NoMatch from "./views/NoMatch/NoMatch";
 
 import { hideModal } from "./redux/actions/modal.action";
 
+const NavBarWithRouter = withRouter(NavBar);
+
 const App = () => {
-	const { loading } = useAuth0();
 	const dispatch = useDispatch();
 
-	if (loading) {
-		return <div>Loading...</div>;
-	}
-
 	return (
-		<Router>
-			<NavBar />
+		<Router history={history}>
+			<NavBarWithRouter />
 			<Switch>
 				<Route exact path="/" component={Home} />
-				<Route path="/auth_client" component={AuthClient} />
-				{/* <Route path="/products" component={ProductPage} /> */}
-
+				<PrivateRoute path="/my-profile" component={Profile} />
+				<PrivateRoute path="/my-orders" component={Orders} />
+				{/* <PrivateRoute path="/my-messages" component={Messages} /> */}
 				<Route component={NoMatch} />
 			</Switch>
 			<ModalRoot hideModal={() => dispatch(hideModal())} />
