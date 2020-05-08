@@ -11,4 +11,5 @@ export const onRedirectCallback = (appState) => {
 export const config = {
 	domain: "dev-2o6a8byc.eu.auth0.com",
 	clientId: "YIfBoxMsxuVG6iTGNlxX3g7lvecyzrVQ",
+	audience: "https://dev-2o6a8byc.eu.auth0.com/api/v2/",
 };

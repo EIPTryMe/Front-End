@@ -25,7 +25,7 @@ const NavBar = (props) => {
 	</span> : null;
 
 	return (
-		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="main-nav">
+		<Navbar collapseOnSelect expand="md" bg="dark" variant="dark" className="main-nav">
 			<Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">
