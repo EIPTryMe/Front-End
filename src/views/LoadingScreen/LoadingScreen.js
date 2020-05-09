@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import logo from "../../assets/img/logo-react.svg";
-import "../../assets/css/loading.css";
 
 export default class LoadingScreen extends Component {
 	render() {

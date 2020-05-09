@@ -6,9 +6,7 @@ import { Provider } from "react-redux";
 import App from "./App";
 import store from "./redux/store";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./assets/scss/default.scss";
-import "./assets/css/loading.css";
+import "./assets/scss/main.scss";
 
 //LOGIN AUTH0
 import { Auth0Provider } from "./hooks/auth0";

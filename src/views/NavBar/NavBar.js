@@ -12,7 +12,7 @@ import './navbar.scss';
 
 const NavBar = (props) => {
 	const { loading, isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
-	const { location } = props;
+	const { location, cartItemNumber } = props;
 
 	const ButtonLogin = () => (
 		<Button variant="outline-light" className="mr-sm-2" onClick={() => loginWithRedirect({})}>
@@ -25,30 +25,28 @@ const NavBar = (props) => {
 	</span> : null;
 
 	return (
-<<<<<<< HEAD:new/src/views/NavBar/NavBar.js
 		<Navbar collapseOnSelect expand="md" bg="dark" variant="dark" className="main-nav">
-			<Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
-=======
-		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="main-nav">
 			<Navbar.Brand href="/">TryMe</Navbar.Brand>
->>>>>>> 2d6e097bf58a694e6fd3fce692027e91baf21c38:src/views/NavBar/NavBar.js
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">
 				<Nav className="mr-auto" activeKey={location.pathname}>
 					<Nav.Link href="/">Home</Nav.Link>
-					<Nav.Link href="/Products">Products</Nav.Link>
+					<Nav.Link href="/products">Products</Nav.Link>
 				</Nav>
 				<Nav activeKey={location.pathname}>
 					{loading && <Spinner animation="border" variant="light" size="sm" />}
 					{!loading && !isAuthenticated && <ButtonLogin />}
 					{!loading && isAuthenticated && (
-						<NavDropdown title={dropdownTitle} id="collasible-nav-dropdown">
-							<NavDropdown.Item href="/my-profile">Mon profil</NavDropdown.Item>
-							<NavDropdown.Item href="/my-orders">Mes commandes</NavDropdown.Item>
-							<NavDropdown.Item href="/my-messages">Mes messages</NavDropdown.Item>
-							<NavDropdown.Divider />
-							<NavDropdown.Item href="/" onClick={() => logout()}>Déconnexion</NavDropdown.Item>
-						</NavDropdown>
+						<React.Fragment>
+							<Nav.Link href="/my-cart">Mon panier <span className="badge">{cartItemNumber}</span></Nav.Link>
+							<NavDropdown title={dropdownTitle} id="collasible-nav-dropdown">
+								<NavDropdown.Item href="/my-profile">Mon profil</NavDropdown.Item>
+								<NavDropdown.Item href="/my-orders">Mes commandes</NavDropdown.Item>
+								<NavDropdown.Item href="/my-messages">Mes messages</NavDropdown.Item>
+								<NavDropdown.Divider />
+								<NavDropdown.Item href="/" onClick={() => logout()}>Déconnexion</NavDropdown.Item>
+							</NavDropdown>
+						</React.Fragment>
 					)}
 				</Nav>
 			</Navbar.Collapse>

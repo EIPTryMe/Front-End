@@ -25,7 +25,7 @@ const App = () => {
 			<NavBarWithRouter />
 			<Switch>
 				<Route exact path="/" component={Home} />
-				<Route exact path="/Products" component={Product} />
+				<Route path="/products" component={Product} />
 				<PrivateRoute path="/my-profile" component={Profile} />
 				<PrivateRoute path="/my-orders" component={Orders} />
 				{/* <PrivateRoute path="/my-messages" component={Messages} /> */}

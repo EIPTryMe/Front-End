@@ -6,6 +6,7 @@ export default class Product extends Component {
     render() {
         const {product} = this.props;
         return (
+            <article className="thumb">
                 <li className="product fl-l">
                     <div className="container-prod">
                         <div className="image"
@@ -22,7 +23,7 @@ export default class Product extends Component {
                         </div>
                     </div>
                 </li>
-
+            </article>
         );
     }
 }

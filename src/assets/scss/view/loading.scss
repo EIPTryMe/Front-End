@@ -1,0 +1,23 @@
+.loading-background {
+	background-color: white;
+	min-height: calc(100vh - 62px);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: #282c34;
+
+	.loading-logo {
+		height: 40vmin;
+		pointer-events: none;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        .loading-logo {
+            animation: App-logo-spin infinite 9s linear;
+        }
+    }
+
+	.loading-text {
+		font-size: 3em;
+	}
+}

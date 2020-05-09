@@ -7,10 +7,8 @@ export default class ProductList extends Component {
         return (
             <div>
                 {
-                    products.map((product) => (
-                        <article className="thumb">
-                            <ProductItem product={product} />
-                        </article>
+                    products.map((product, index) => (
+                        <ProductItem key={`product-${index}`} product={product} />
                     ))
                 }
             </div>

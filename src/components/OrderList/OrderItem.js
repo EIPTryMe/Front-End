@@ -7,7 +7,7 @@ export default class Order extends Component {
         const created_at = new Date(order.created_at);
         const updated_at = new Date(order.updated_at);
         return (
-            <tr key={"order-" + order.id}>
+            <tr>
                 <td>{order.id}</td>
                 <td>{order.status}</td>
                 <td>{created_at.toLocaleString()}</td>
