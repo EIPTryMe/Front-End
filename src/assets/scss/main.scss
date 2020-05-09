@@ -1,11 +1,21 @@
+// Default variables
+@import "variables.scss";
 
 @import "~bootstrap/scss/bootstrap";
 
 // Animations keyframes
 @import "keyframes.scss";
 
-// Default variables
+// Default - GLOBAL
 @import "default.scss";
 
 // Views
 @import "view/loading.scss";
+@import "view/navbar.scss";
+@import "view/orders.scss";
+@import "view/products.scss";
+@import "view/profile.scss";
+
+
+//Components
+@import "component/productFilters.scss";

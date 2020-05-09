@@ -5,8 +5,6 @@ import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import Container from "react-bootstrap/Container";
 import OrderList from '../../components/OrderList/OrderList';
 
-import "./orders.scss";
-
 import { GET_ORDERS } from '../../queries/orders';
 import { useQuery } from '@apollo/react-hooks';
 import { handleHttpError } from "../../utils/errorHandler";

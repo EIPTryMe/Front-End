@@ -1,0 +1,30 @@
+.my-products {
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+
+	//VARIABLES FOR PRODUCT VIEW
+	$paddingProducts: 8px;
+
+	.product-filters-container {
+		min-width: 200px;
+		padding: $paddingProducts;
+		border-right: 1px solid $platinum;
+	}
+
+	.product-list-container {
+		width: 100%;
+		padding: $paddingProducts;
+	}
+
+	.product-card {
+		margin: $paddingProducts;
+	}
+
+	@include media-breakpoint-down(sm) {
+		.product-filters-container {
+			min-width: 200px;
+			display: none;
+		}
+	}
+}

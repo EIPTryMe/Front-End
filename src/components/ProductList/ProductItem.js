@@ -1,29 +1,49 @@
-import React, {Component} from "react";
-import {faCartPlus} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import React, { Component } from "react";
+import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
+import Carousel from "react-bootstrap/Carousel";
+import Button from "react-bootstrap/Button";
 
 export default class Product extends Component {
-    render() {
-        const {product} = this.props;
-        return (
-            <article className="thumb">
-                <li className="product fl-l">
-                    <div className="container-prod">
-                        <div className="image"
-                             style={{backgroundImage: "url(https://cdn.futura-sciences.com/buildsv6/images/wide1920/6/5/2/652a7adb1b_98148_01-intro-773.jpg)"}}> </div>
-                        <div className="container-information">
-                            <div className="title">
-                                {product.name}, {product.price_per_day}$/day
-                            </div>
-                            <div className="description"> {product.product_descriptions.name} </div>
-                        </div>
-
-                        <div className="buttons cf">
-                            Add to Cart <FontAwesomeIcon icon={faCartPlus}/>
-                        </div>
-                    </div>
-                </li>
-            </article>
-        );
-    }
+	render() {
+		const { product } = this.props;
+		return (
+			<Col xs="12" sm="6" md="4">
+				<Card className="product-card">
+					<Carousel interval={null}>
+						<Carousel.Item>
+							<Card.Img
+								variant="top"
+								src="https://via.placeholder.com/286x300/14213D/FFFFFF?text=Tryme+placeholder"
+							/>
+						</Carousel.Item>
+						<Carousel.Item>
+							<Card.Img
+								variant="top"
+								src="https://via.placeholder.com/286x300/FCA311/FFFFFF?text=Tryme+placeholder"
+							/>
+						</Carousel.Item>
+						<Carousel.Item>
+							<Card.Img
+								variant="top"
+								src="https://via.placeholder.com/286x300/000000/FFFFFF?text=Tryme+placeholder"
+							/>
+						</Carousel.Item>
+					</Carousel>
+					<Card.Body>
+						<Card.Title>
+							{product.name}, {product.price_per_day}$/day
+						</Card.Title>
+						<Card.Text>{product.product_descriptions.name}</Card.Text>
+						<Button variant="success">
+							Add to Cart <FontAwesomeIcon icon={faCartPlus} />
+						</Button>
+					</Card.Body>
+				</Card>
+			</Col>
+		);
+	}
 }

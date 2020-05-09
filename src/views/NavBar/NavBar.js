@@ -8,8 +8,6 @@ import Button from "react-bootstrap/Button";
 
 import { useAuth0 } from "../../hooks/auth0";
 
-import './navbar.scss';
-
 const NavBar = (props) => {
 	const { loading, isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
 	const { location, cartItemNumber } = props;
@@ -25,7 +23,7 @@ const NavBar = (props) => {
 	</span> : null;
 
 	return (
-		<Navbar collapseOnSelect expand="md" bg="dark" variant="dark" className="main-nav">
+		<Navbar collapseOnSelect expand="md" bg="dark" variant="dark" className="main-nav" sticky="top">
 			<Navbar.Brand href="/">TryMe</Navbar.Brand>
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">

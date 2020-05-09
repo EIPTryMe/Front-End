@@ -4,8 +4,6 @@ import { useAuth0 } from "../../hooks/auth0";
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import Container from "react-bootstrap/Container";
 
-import "./profile.scss";
-
 const Profile = () => {
 	const { loading, user } = useAuth0();
 
