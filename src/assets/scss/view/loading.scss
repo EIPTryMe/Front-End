@@ -1,6 +1,6 @@
 .loading-background {
 	background-color: white;
-	min-height: calc(100vh - 62px);
+	min-height: calc(100vh - #{$NavBarHeight});
 	display: flex;
 	flex-direction: column;
 	align-items: center;

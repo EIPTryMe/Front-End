@@ -1,67 +1,59 @@
-import React, { Component } from "react";
+import React, { useState, useCallback } from "react";
 
 import ReactSlider from "react-slider";
 import ProductFilterGroup from "./ProductFilterGroup";
 
+
 const sliderMin = 0;
-const sliderMax = 300;
+const sliderMax = 350;
 
-export default class ProductFilters extends Component {
-	constructor(props) {
-		super(props);
+function ProductFilters(props) {
+	const [priceRange, setPriceRange] = useState([sliderMin, sliderMax]);
+	const { onAfterChangePriceRange, onChangeOrderBy } = props;
 
-		this.state = {
-			priceRange: [sliderMin, sliderMax],
-		};
-	}
+	const onChangePriceRange = useCallback((values) => setPriceRange([values[0], values[1]]), [priceRange]);
 
-	onSliderChange = (values) => {
-		this.setState({
-			priceRange: values,
-		});
-	};
+	return (
+		<div className="product-filters">
+			<h2 className="Title">Filtrer</h2>
 
-	render() {
-		const { priceRange } = this.state;
-
-		return (
-			<div className="product-filters">
-				<h2 className="Title">Filtrer</h2>
-
-				<ProductFilterGroup title="Trier par :">
-					<label>
-						<input type="radio" name="sort-by" /> Plus populaire
-					</label>
-					<label>
-						<input type="radio" name="sort-by" /> Prix croissant
-					</label>
-					<label>
-						<input type="radio" name="sort-by" /> Prix décroissant
-					</label>
-					<label>
-						<input type="radio" name="sort-by" /> Nouveautés
-					</label>
-				</ProductFilterGroup>
-				<ProductFilterGroup title="Prix par mois :">
-					<ReactSlider
-						className="slider"
-						thumbClassName="slider-thumb"
-						trackClassName="slider-track"
-						defaultValue={[sliderMin, sliderMax]}
-						min={sliderMin}
-						max={sliderMax}
-						onChange={this.onSliderChange}
-						ariaLabel={["Lower thumb", "Upper thumb"]}
-						ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
-						renderThumb={(props, state) => <div {...props}></div>}
-						pearling
-						minDistance={10}
-					/>
-					<div className="">
-						{priceRange[0]}€ - {priceRange[1]}€
-					</div>
-				</ProductFilterGroup>
-			</div>
-		);
-	}
+			<ProductFilterGroup title="Trier par :" inputClasses={['order-by']}>
+				<label>
+					<input type="radio" name="sort-by" value="popular_desc" onChange={onChangeOrderBy}/> Plus populaire
+				</label>
+				<label>
+					<input type="radio" name="sort-by" value="price_asc" onChange={onChangeOrderBy}/> Prix croissant
+				</label>
+				<label>
+					<input type="radio" name="sort-by" value="price_desc" onChange={onChangeOrderBy}/> Prix décroissant
+				</label>
+				<label>
+					<input type="radio" name="sort-by" value="new" onChange={onChangeOrderBy}/> Nouveautés
+				</label>
+			</ProductFilterGroup>
+			<ProductFilterGroup title="Prix par mois :">
+				<ReactSlider
+					className="slider"
+					thumbClassName="slider-thumb"
+					trackClassName="slider-track"
+					defaultValue={[sliderMin, sliderMax]}
+					min={sliderMin}
+					max={sliderMax}
+					onChange={onChangePriceRange}
+					// onAfterChange={([min, max]) => onAfterChangePriceRange(min, max)}
+					onAfterChange={onAfterChangePriceRange}
+					ariaLabel={["Lower thumb", "Upper thumb"]}
+					ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
+					renderThumb={(props, state) => <div {...props}></div>}
+					pearling
+					minDistance={10}
+				/>
+				<div className="">
+					{priceRange[0]}€ - {priceRange[1]}€
+				</div>
+			</ProductFilterGroup>
+		</div>
+	);
 }
+
+export default ProductFilters;

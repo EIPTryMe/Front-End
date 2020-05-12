@@ -8,8 +8,18 @@
 
 	.product-filters-container {
 		min-width: 200px;
+		max-width: 300px;
+		min-height: calc(100vh - #{$NavBarHeight});
 		padding: $paddingProducts;
 		border-right: 1px solid $platinum;
+
+		.filter-input {
+			&.order-by {
+				label {
+					width: 100%;
+				}
+			}
+		}
 	}
 
 	.product-list-container {
@@ -19,6 +29,29 @@
 
 	.product-card {
 		margin: $paddingProducts;
+		transition: transform $transitionTime;
+
+		&:hover {
+			transform: scale(1.03);
+		}
+
+		.product-item-title {
+			color: $black;
+			font-size: 14px;
+		}
+		.product-item-description {
+			color: rgb(51, 51, 51);
+			font-size: 14px;
+		}
+		.product-item-price {
+			color: rgb(51, 51, 51);
+			font-size: 12px;
+
+			b {
+				color: black;
+				font-size: 16px;
+			}
+		}
 	}
 
 	@include media-breakpoint-down(sm) {

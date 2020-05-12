@@ -6,8 +6,8 @@ export default class ProductFilters extends Component {
 
 		return (
 			<div className="filter-group">
-				<div className={["filter-title", ...titleClasses]}>{title}</div>
-				<div className={["filter-input", ...inputClasses]}>{children}</div>
+				<div className={`filter-title ${titleClasses.join(' ')}`}>{title}</div>
+				<div className={`filter-input ${inputClasses.join(' ')}`}>{children}</div>
 			</div>
 		);
 	}

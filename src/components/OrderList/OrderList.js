@@ -20,7 +20,7 @@ export default class OrderList extends Component {
 				</thead>
 				<tbody>
 					{orders.map((order, index) => (
-						<OrderItem key={`order-${index}`} order={order} />
+						<OrderItem key={`order-${order.id}`} order={order} />
 					))}
 				</tbody>
 			</Table>

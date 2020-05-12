@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 export const GET_ORDERS = gql`
 	{
@@ -41,6 +41,24 @@ export const DELETE_ORDER = gql`
 	mutation updateCommandById {
 		delete_command(where: { id: { _eq: 2 } }) {
 			affected_rows
+		}
+	}
+`;
+
+export const ORDER_PAYMENT = gql`
+	mutation orderPayment {
+		orderPayment(
+			addressDetails: {
+				address_city: ""
+				address_country: ""
+				address_line_1: ""
+				address_postal_code: 10
+				user_id: 10
+			}
+			currency: ""
+		) {
+			clientSecret
+			publishableKey
 		}
 	}
 `;
