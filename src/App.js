@@ -13,7 +13,7 @@ import Profile from "./views/Profile/Profile";
 import Orders from "./views/Orders/Orders";
 import NoMatch from "./views/NoMatch/NoMatch";
 import Product from "./views/Product/Products";
-
+import Panier from "./views/Panier/Panier";
 import { hideModal } from "./redux/actions/modal.action";
 
 const NavBarWithRouter = withRouter(NavBar);
@@ -26,6 +26,7 @@ const App = () => {
 			<div className="content-wrapper">
 				<Switch>
 					<Route exact path="/" component={Home} />
+					<Route path="/my-cart" component={Panier}  />
 					<Route path="/products" component={Product} />
 					<PrivateRoute path="/my-profile" component={Profile} />
 					<PrivateRoute path="/my-orders" component={Orders} />
