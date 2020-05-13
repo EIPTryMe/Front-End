@@ -22,7 +22,7 @@ const Products = () => {
 			</div>
 			<Container className="product-list-container">
 				{isLoadingProducts && <LoadingScreen />}
-				{!isLoadingProducts && error && handleHttpError(error)}
+				{!isLoadingProducts && !!error && handleHttpError(error)}
 				{!isLoadingProducts && !error && products && <ProductList products={products} />}
 			</Container>
 		</div>
