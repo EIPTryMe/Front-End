@@ -23,7 +23,7 @@ const NavBar = (props) => {
 	</span> : null;
 
 	return (
-		<Navbar collapseOnSelect expand="md" bg="dark" variant="dark" className="main-nav" sticky="top">
+		<Navbar collapseOnSelect expand="md" bg="blue" variant="dark" className="main-nav" sticky="top">
 			<Navbar.Brand href="/">TryMe</Navbar.Brand>
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">

@@ -7,7 +7,7 @@ function ProductList(props) {
 	const { products } = props;
 
 	return (
-		<Row className="product-row" noGutters={true}>
+		<Row noGutters={true}>
 			{products.map((product, index) => (
 				<ProductItem key={`product-${product.id}`} product={product} />
 			))}
