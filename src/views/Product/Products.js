@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, { useMemo } from "react";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import Container from "react-bootstrap/Container";
 
@@ -12,7 +12,9 @@ import { useProductFilter } from "../../hooks/productFilterHook";
 
 const Products = () => {
 	const { filters, ...filterHandlers } = useProductFilter();
-	const { loading: isLoadingProducts, error, data = {product: []} } = useQuery(GET_PRODUCTS, {variables: {...filters}});
+	const { loading: isLoadingProducts, error, data = { product: [] } } = useQuery(GET_PRODUCTS, {
+		variables: { ...filters }
+	});
 	const products = useMemo(() => data.product, [data.product]);
 
 	return (

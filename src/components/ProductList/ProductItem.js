@@ -14,7 +14,9 @@ import formatPrice from "../../utils/formatPrice";
 
 function ProductItem(props) {
 	const { product } = props;
-	const [addToCart] = useMutation(ADD_TO_CART);
+	const [addToCart] = useMutation(ADD_TO_CART
+			//, { context: { headers: { toto: "titi" } } }  --- TO ADD CUSTOM HEADERS
+		);
 
 	const onAddCart = (product_id) => {
 		console.log("Add to cart: ", product_id);
