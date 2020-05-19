@@ -3,6 +3,7 @@ html {
 }
 body {
 	height: auto;
+	overflow-x: hidden;
 }
 p {
 	margin: 0;
@@ -11,5 +12,5 @@ img {
 	max-width: 100%;
 }
 .row {
-	width: 100%;
+	// width: 100%;
 }

@@ -2,8 +2,6 @@ import React from "react";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import CartList from "../../components/CartList/CartList";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 import { GET_PRODUCTS } from "../../queries/product";
 import { useQuery } from "@apollo/react-hooks";
