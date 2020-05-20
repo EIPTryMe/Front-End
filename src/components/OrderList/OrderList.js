@@ -15,7 +15,8 @@ export default class OrderList extends Component {
 						<th>#</th>
 						<th>Status</th>
 						<th>Date de création</th>
-						<th>Date de modification</th>
+						<th>Adresse facturation</th>
+						<th>Produits</th>
 					</tr>
 				</thead>
 				<tbody>

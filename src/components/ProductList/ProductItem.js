@@ -12,17 +12,27 @@ import { useMutation } from "@apollo/react-hooks";
 
 import formatPrice from "../../utils/formatPrice";
 
+import { NotificationManager } from 'react-notifications';
+
 function ProductItem(props) {
 	const { product } = props;
-	const [addToCart] = useMutation(ADD_TO_CART
-			//, { context: { headers: { toto: "titi" } } }  --- TO ADD CUSTOM HEADERS
-		);
+	const [addToCart] = useMutation(
+		ADD_TO_CART
+		//, { context: { headers: { toto: "titi" } } }  --- TO ADD CUSTOM HEADERS
+	);
 
-	const onAddCart = (product_id) => {
-		console.log("Add to cart: ", product_id);
+	const onAddCart = (product) => {
+		const { id: product_id } = product;
+
 		addToCart({
 			variables: { product_id },
-		});
+		})
+			.then((added) => {
+				NotificationManager.success(`${product.name} x 1`, 'Ajout au panier');
+			})
+			.catch((error) => {
+				NotificationManager.warning(error.message, 'Attention');
+			});
 	};
 
 	const price_per_month_formatted = useMemo(() => formatPrice(product.price_per_month), [
@@ -62,10 +72,13 @@ function ProductItem(props) {
 					<Card.Text className="product-item-price">
 						A partir de <b>€{price_per_month_formatted}</b> par mois
 					</Card.Text>
+					<Card.Text className="product-item-price">
+						Stock: {product.stock}
+					</Card.Text>
 					<Button
 						variant="success"
 						className="mt-3"
-						onClick={() => onAddCart(product.id)}
+						onClick={() => onAddCart(product)}
 					>
 						Add to Cart <FontAwesomeIcon icon={faCartPlus} />
 					</Button>

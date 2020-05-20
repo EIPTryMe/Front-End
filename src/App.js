@@ -14,7 +14,9 @@ import Orders from "./views/Orders/Orders";
 import NoMatch from "./views/NoMatch/NoMatch";
 import Product from "./views/Product/Products";
 import Cart from "./views/Cart/Cart";
+
 import { hideModal } from "./redux/actions/modal.action";
+import { NotificationContainer } from 'react-notifications';
 
 const NavBarWithRouter = withRouter(NavBar);
 
@@ -35,6 +37,7 @@ const App = () => {
 				</Switch>
 			</div>
 			<ModalRoot hideModal={() => dispatch(hideModal())} />
+			<NotificationContainer />
 		</Router>
 	);
 };

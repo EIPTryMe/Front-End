@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import App from "./App";
 import store from "./redux/store";
 
+import 'react-notifications/lib/notifications.css';
 import "./assets/scss/main.scss";
 
 //LOGIN AUTH0

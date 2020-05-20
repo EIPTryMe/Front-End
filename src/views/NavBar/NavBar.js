@@ -22,6 +22,12 @@ const NavBar = (props) => {
 		<img className="avatar" src={user.picture} alt=""/> {user.name}
 	</span> : null;
 
+	const onLogout = (e) => {
+		e.preventDefault();
+
+		logout({returnTo: window.location.origin});
+	}
+
 	return (
 		<Navbar collapseOnSelect expand="md" bg="blue" variant="dark" className="main-nav" sticky="top">
 			<Navbar.Brand href="/">TryMe</Navbar.Brand>
@@ -42,7 +48,7 @@ const NavBar = (props) => {
 								<NavDropdown.Item href="/my-orders">Mes commandes</NavDropdown.Item>
 								<NavDropdown.Item href="/my-messages">Mes messages</NavDropdown.Item>
 								<NavDropdown.Divider />
-								<NavDropdown.Item href="/" onClick={() => logout()}>Déconnexion</NavDropdown.Item>
+								<NavDropdown.Item href='/logout' onClick={onLogout}>Déconnexion</NavDropdown.Item>
 							</NavDropdown>
 						</React.Fragment>
 					)}

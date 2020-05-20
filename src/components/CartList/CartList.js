@@ -1,19 +1,29 @@
-import React, { Component } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import CartItem from "./CartItem";
 
 import Table from "react-bootstrap/Table";
 
 import CartSummary from "./CartSummary";
 
-export default class CartList extends Component {
-	render() {
-		const { carts } = this.props;
+import { DEL_CART_ITEM } from "../../queries/cart";
+import { useMutation } from "@apollo/react-hooks";
 
-		// todo remove for production
-		const newC = carts.map((cart) => {
-			if (!cart.quantity) cart.quantity = Math.floor(Math.random() * 4) + 1;
+import { NotificationManager } from "react-notifications";
+
+const MemoCartItem = React.memo(({...props}) => <CartItem {...props}/>);
+
+function CartList(props) {
+	const { carts } = props;
+
+	// todo remove for production
+	const [devCarts, setDevCarts] = useState(
+		carts.map((cart) => {
+			if (!cart.quantity) cart.quantity = 1 || Math.floor(Math.random() * 4) + 1;
 			if (!cart.duration) cart.duration = 6;
-			if (!cart.product.product_descriptions)
+			if (
+				!cart.product.product_descriptions ||
+				cart.product.product_descriptions.length === 0
+			)
 				cart.product.product_descriptions = [
 					{
 						name:
@@ -21,18 +31,38 @@ export default class CartList extends Component {
 					},
 				];
 			return cart;
-		});
+		})
+	);
 
-		return (
-			<Table bordered responsive="md" variant="light" className="cart-list-table">
-				<tbody>
-					{/* todo edit newC */}
-					{newC.map((cart) => (
-						<CartItem cart={cart} key={`cart-${cart.id}`} />
-					))}
-					<CartSummary carts={newC} />
-				</tbody>
-			</Table>
-		);
-	}
+	const [deleteCartItem] = useMutation(DEL_CART_ITEM);
+
+
+	const onDeleteCartItem = useCallback((cart) => {
+		const { id: cart_id } = cart;
+
+		deleteCartItem({
+			variables: { cart_id },
+		})
+			.then((deletedCart) => {
+				setDevCarts((devCarts) => devCarts.filter((d) => d.id !== cart_id));
+				NotificationManager.success(`${cart.product.name} x 1`, "Retiré du panier");
+			})
+			.catch((error) => {
+				NotificationManager.warning(error.message, "Attention");
+			});
+			
+	}, []);
+
+	return (
+		<Table bordered responsive="md" variant="light" className="cart-list-table">
+			<tbody>
+				{devCarts.map((cart) => (
+					<MemoCartItem cart={cart} key={`cart-${cart.id}`} onDeleteCartItem={onDeleteCartItem} />
+				))}
+				<CartSummary carts={devCarts} />
+			</tbody>
+		</Table>
+	);
 }
+
+export default CartList;

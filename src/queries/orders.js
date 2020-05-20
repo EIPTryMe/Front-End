@@ -2,11 +2,23 @@ import { gql } from "apollo-boost";
 
 export const GET_ORDERS = gql`
 	{
-		command {
+		order {
 			id
-			status
-			updated_at
 			created_at
+			address_postal_code
+			address_line_1
+			address_country
+			address_city
+			order_items {
+				id
+				price
+				product {
+					brand
+					id
+					name
+					price_per_month
+				}
+			}
 		}
 	}
 `;
@@ -49,13 +61,12 @@ export const ORDER_PAYMENT = gql`
 	mutation orderPayment {
 		orderPayment(
 			addressDetails: {
-				address_city: ""
-				address_country: ""
-				address_line_1: ""
-				address_postal_code: 10
-				user_id: 10
+				address_city: "Lille"
+				address_country: "France"
+				address_line_1: "201 rue moulin"
+				address_postal_code: 59080
 			}
-			currency: ""
+			currency: "EUR"
 		) {
 			clientSecret
 			publishableKey

@@ -20,7 +20,7 @@ const Orders = () => {
 		return handleHttpError(error);
 	}
 
-	//FOR TESTING
+	//todo remove for prod FOR TESTING
 	user.company = {
 		name: "EIP",
 		siret: "000198765467",
@@ -28,7 +28,7 @@ const Orders = () => {
 		phone: "+33612345678",
 	};
 
-	const orders = data ? data.command : [];
+	const orders = data ? data.order : [];
 
 	return (
 		<Container className="my-orders">

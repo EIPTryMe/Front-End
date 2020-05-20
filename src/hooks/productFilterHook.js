@@ -33,9 +33,8 @@ function useProductFilter() {
                 filter = {price_per_month: 'asc'};
                 break;
             }
-            //todo created_at
             case 'new': {
-                filter = {id: 'desc'};
+                filter = {created_at: 'desc'};
                 break;
             }
             default:
