@@ -9,15 +9,15 @@
 // Default - GLOBAL
 @import "default.scss";
 
-// Views
-@import "view/loading.scss";
-@import "view/navbar.scss";
-@import "view/orders.scss";
-@import "view/products.scss";
-@import "view/profile.scss";
-@import "view/cart.scss";
-@import "view/home.scss";
+// Pages
+@import "pages/MyOrdersPage.scss";
+@import "pages/ProductPage.scss";
+@import "pages/MyProfilePage.scss";
+@import "pages/MyCartPage.scss";
+@import "pages/MyHomePage.scss";
 
 
 //Components
-@import "component/productFilters.scss";
+@import "components/LoadingComponent.scss";
+@import "components/NavbarComponent.scss";
+@import "components/productFilters.scss";
