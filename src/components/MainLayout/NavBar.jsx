@@ -1,5 +1,5 @@
 import React from "react";
-
+import { NavLink } from 'react-router-dom'
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -43,25 +43,26 @@ const NavBar = (props) => {
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">
 				<Nav className="mr-auto" activeKey={location.pathname}>
-					<Nav.Link href="/">Home</Nav.Link>
-					<Nav.Link href="/products">Products</Nav.Link>
+					<Nav.Link as={NavLink} exact to="/">Home</Nav.Link>
+					<Nav.Link as={NavLink} exact to="/products">Products</Nav.Link>
 				</Nav>
 				<Nav activeKey={location.pathname}>
 					{loading && <Spinner animation="border" variant="light" size="sm" />}
 					{!loading && !isAuthenticated && <ButtonLogin />}
 					{!loading && isAuthenticated && (
 						<React.Fragment>
-							<Nav.Link href="/my-cart">
+							<Nav.Link as={NavLink} exact to="/my-cart">
 								Mon panier <span className="badge">{cartItemNumber}</span>
 							</Nav.Link>
-							<NavDropdown title={dropdownTitle} id="collasible-nav-dropdown">
-								<NavDropdown.Item href="/my-profile">Mon profil</NavDropdown.Item>
-								<NavDropdown.Item href="/my-orders">Mes commandes</NavDropdown.Item>
-								<NavDropdown.Item href="/my-messages">
-									Mes messages
-								</NavDropdown.Item>
+							<NavDropdown
+								title={dropdownTitle} 
+								id="collasible-nav-dropdown"
+								active={location.pathname.includes('/profile/')}
+							>
+								<NavDropdown.Item as={NavLink} exact to="/profile/me">Mon profil</NavDropdown.Item>
+								<NavDropdown.Item as={NavLink} exact to="/profile/orders">Mes commandes</NavDropdown.Item>
 								<NavDropdown.Divider />
-								<NavDropdown.Item href="/logout" onClick={onLogout}>
+								<NavDropdown.Item as={NavLink} exact to="/logout" onClick={onLogout}>
 									Déconnexion
 								</NavDropdown.Item>
 							</NavDropdown>

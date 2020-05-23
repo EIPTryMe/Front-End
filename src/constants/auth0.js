@@ -1,11 +1,5 @@
-import history from "../utils/history";
-
-export const onRedirectCallback = (appState) => {
-	history.push(
-		appState && appState.targetUrl
-			? appState.targetUrl
-			: window.location.pathname
-	);
+export const onRedirectCallback = (appState, history) => {
+	history.push(appState && appState.targetUrl ? appState.targetUrl : window.location.pathname);
 };
 
 export const config = {

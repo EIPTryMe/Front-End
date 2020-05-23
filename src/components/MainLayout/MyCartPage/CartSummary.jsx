@@ -5,7 +5,6 @@ import formatPrice from "../../../utils/formatPrice";
 function CartSummary(props) {
 	const { carts } = props;
 
-	console.log('rerender summary');
 	const subTotal = formatPrice(
 		carts.reduce((sum, cart) => sum + cart.product.price_per_month * cart.quantity, 0)
 	);

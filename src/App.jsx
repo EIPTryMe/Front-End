@@ -19,30 +19,53 @@ import MainLayout from "./layouts/MainLayout";
 import CheckoutLayout from "./layouts/CheckoutLayout";
 
 import AppRoute from "./components/Route/AppRoute";
+import AppPrivateRoute from "./components/Route/AppPrivateRoute";
 
-const Routes = () => {
+
+//LOGIN AUTH0
+import { Auth0Provider } from "./hooks/auth0";
+import { config, onRedirectCallback } from "./constants/auth0";
+//LOGIN AUTH0
+
+//GRAPHQL
+import { client } from "./constants/graphql";
+import { ApolloProvider } from "@apollo/react-hooks";
+//GRAPHQL
+
+const Routes = () => {	
 	return (
 		<Switch>
 			<AppRoute exact path="/" layout={MainLayout} component={HomePage} title="Home" />
 			<AppRoute path="/products" layout={MainLayout} component={ProductPage} title="Produits" />
-			<AppRoute path="/my-cart" layout={MainLayout} component={MyCartPage} title="Mon panier" private={true} />
-			<AppRoute path="/my-profile" layout={MainLayout} component={MyProfilePage} title="Mon profil" private={true} />
-			<AppRoute path="/my-orders" layout={MainLayout} component={MyOrdersPage} title="Mes commandes" private={true} />
+			<AppPrivateRoute path="/my-cart" layout={MainLayout} component={MyCartPage} title="Mon panier" />
+			<AppPrivateRoute path="/profile/me" layout={MainLayout} component={MyProfilePage} title="Mon profil" />
+			<AppPrivateRoute path="/profile/orders" layout={MainLayout} component={MyOrdersPage} title="Mes commandes" />
 
-			<AppRoute path="/checkout/step-1" layout={CheckoutLayout} component={CheckoutOnePage} title="Etape 1" private={true} />
-			<AppRoute path="/checkout/success" layout={CheckoutLayout} component={CheckoutSuccessPage} title="Commande validée" private={true} />
-			<AppRoute path="/checkout/cancel" layout={CheckoutLayout} component={CheckoutCancelPage} title="Commande annulée" private={true} />			
+			<AppPrivateRoute path="/checkout/step-1" layout={CheckoutLayout} component={CheckoutOnePage} title="Etape 1" />
+			<AppPrivateRoute path="/checkout/success" layout={CheckoutLayout} component={CheckoutSuccessPage} title="Commande validée" />
+			<AppPrivateRoute path="/checkout/cancel" layout={CheckoutLayout} component={CheckoutCancelPage} title="Commande annulée" />			
 			<Redirect from="*" to="/" />
 		</Switch>
 	);
 };
 
+// Router must wrap everything so it can redirects.
 const App = () => (
-	<AppContextProvider>
-		<Router history={history}>
-			<Routes />
-		</Router>
-	</AppContextProvider>
+	<Router history={history}>
+		<AppContextProvider>
+			<ApolloProvider client={client}>
+				<Auth0Provider
+					domain={config.domain}
+					client_id={config.clientId}
+					audience={config.audience}
+					redirect_uri={window.location.origin}
+					onRedirectCallback={onRedirectCallback}
+				>
+					<Routes />
+				</Auth0Provider>
+			</ApolloProvider>
+		</AppContextProvider>
+	</Router>
 );
 
 export default App;

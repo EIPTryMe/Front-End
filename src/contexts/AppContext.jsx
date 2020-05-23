@@ -6,20 +6,16 @@ import React, { createContext, useContext, useReducer } from "react";
 
 export const initialContext = {
 	state: {
-		initialized: false,
-		connected: null,
 		user: {},
 		params: {},
 	},
+	setUser: (payload = {}) => {},
 	changeParams: (payload = {}) => {},
-	setInitialized: (payload) => {},
-	setConnected: (payload) => {},
 	logout: () => {},
 };
 
 const CHANGE_PARAMS = "CHANGE_PARAMS";
-const SET_INITIALIZED = "SET_INITIALIZED";
-const SET_CONNECTED = "SET_CONNECTED";
+const SET_USER = "SET_USER";
 const LOGOUT = "LOGOUT";
 
 export const AppContext = createContext(initialContext);
@@ -40,16 +36,15 @@ export const reducer = (context, action) => {
 			logout(action.dispatch);
 			return newContextState(context, { user: null });
 		}
+		case SET_USER: {
+			return newContextState(context, {
+				user: { ...context.state.user, ...action.payload },
+			});
+		}
 		case CHANGE_PARAMS: {
 			return newContextState(context, {
 				params: { ...context.state.params, ...action.payload },
 			});
-		}
-		case SET_INITIALIZED: {
-			return newContextState(context, { initialized: action.payload });
-		}
-		case SET_CONNECTED: {
-			return newContextState(context, { connected: action.payload });
 		}
 		default: {
 			return context;
@@ -69,19 +64,10 @@ export const AppContextProvider = ({ children }) => {
 	const contextProviderValue = {
 		...context,
 		logout: () => dispatch({ type: LOGOUT }),
+		setUser: (payload) => dispatch({ type: SET_USER, payload }),
 		changeParams: (payload) =>
 			dispatch({
 				type: CHANGE_PARAMS,
-				payload,
-			}),
-		setInitialized: (payload) =>
-			dispatch({
-				type: SET_INITIALIZED,
-				payload,
-			}),
-		setConnected: (payload) =>
-			dispatch({
-				type: SET_CONNECTED,
 				payload,
 			}),
 	};

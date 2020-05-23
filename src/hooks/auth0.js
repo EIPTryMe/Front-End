@@ -1,6 +1,8 @@
 // src/react-auth0-spa.js
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
+import history from '../utils/history';
+import { useHistory } from "react-router-dom";
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
 	window.history.replaceState({}, document.title, window.location.pathname);
@@ -18,6 +20,7 @@ export const Auth0Provider = ({
 	const [loading, setLoading] = useState(true);
 	const [popupOpen, setPopupOpen] = useState(false);
 
+	const history = useHistory();
 	useEffect(() => {
 		const initAuth0 = async () => {
 			const auth0FromHook = await createAuth0Client(initOptions);
@@ -28,7 +31,7 @@ export const Auth0Provider = ({
 				window.location.search.includes("state=")
 			) {
 				const { appState } = await auth0FromHook.handleRedirectCallback();
-				onRedirectCallback(appState);
+				onRedirectCallback(appState, history);
 			}
 
 			const isAuthenticated = await auth0FromHook.isAuthenticated();
