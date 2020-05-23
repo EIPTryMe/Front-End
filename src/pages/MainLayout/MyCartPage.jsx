@@ -42,17 +42,17 @@ const MyCartPage = ({history}) => {
 			<Container className="title-container">
 				<h1 className="title">Votre Panier</h1>
 				<div>
-					<a href="/Products" className="continue">
-						Continue Shopping
+					<a href="/checkout/step-1" className="continue">
+						Valider mon panier
 					</a>
 				</div>
 			</Container>
 			<Container className="cart-list-container">
 				{!isLoadingCart && carts && <CartList carts={carts} />}
 			</Container>
-			<Container>
-				<a href="/" className="btn continue" onClick={onCheckout}>
-					Checkout
+			<Container className="text-right px-0">
+				<a href="/checkout/step-1" className="continue" onClick={onCheckout}>
+					Valider mon panier
 				</a>
 			</Container>
 		</div>

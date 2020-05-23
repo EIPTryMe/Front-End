@@ -12,7 +12,7 @@ const MainLayout = ({ title, children }) => {
 		<>
 			<HelmetComponent title={title} />
 			<NavBarComponent />
-			<div className="content-wrapper">{children}</div>
+			<div className="layout main-layout">{children}</div>
 			{/* <ModalRoot hideModal={() => dispatch(hideModal())} /> */}
 			<NotificationContainer />
 		</>

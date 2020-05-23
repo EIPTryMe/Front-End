@@ -9,7 +9,9 @@ import MyCartPage from "./pages/MainLayout/MyCartPage";
 import MyProfilePage from "./pages/MainLayout/MyProfilePage";
 import MyOrdersPage from "./pages/MainLayout/MyOrdersPage";
 
-import CheckoutOne from "./pages/CheckoutLayout/CheckoutOne";
+import CheckoutOnePage from "./pages/CheckoutLayout/CheckoutOnePage";
+import CheckoutSuccessPage from "./pages/CheckoutLayout/CheckoutSuccessPage";
+import CheckoutCancelPage from "./pages/CheckoutLayout/CheckoutCancelPage";
 
 import { AppContextProvider } from "./contexts/AppContext";
 
@@ -27,8 +29,9 @@ const Routes = () => {
 			<AppRoute path="/my-profile" layout={MainLayout} component={MyProfilePage} title="Mon profil" private={true} />
 			<AppRoute path="/my-orders" layout={MainLayout} component={MyOrdersPage} title="Mes commandes" private={true} />
 
-			<AppRoute path="/checkout/step-1" layout={CheckoutLayout} component={CheckoutOne} title="Etape 1" private={true} />
-			
+			<AppRoute path="/checkout/step-1" layout={CheckoutLayout} component={CheckoutOnePage} title="Etape 1" private={true} />
+			<AppRoute path="/checkout/success" layout={CheckoutLayout} component={CheckoutSuccessPage} title="Commande validée" private={true} />
+			<AppRoute path="/checkout/cancel" layout={CheckoutLayout} component={CheckoutCancelPage} title="Commande annulée" private={true} />			
 			<Redirect from="*" to="/" />
 		</Switch>
 	);

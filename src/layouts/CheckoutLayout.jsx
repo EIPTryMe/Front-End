@@ -6,8 +6,8 @@ const CheckoutLayout = ({ title, children }) => {
 	return (
 		<>
 			<HelmetComponent title={title} />
-			<div className="content-wrapper">
-				Checkout: {children}
+			<div className="layout checkout-layout">
+				{children}
 			</div>
 		</>
 	);

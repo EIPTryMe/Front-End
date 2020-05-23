@@ -58,18 +58,29 @@ export const DELETE_ORDER = gql`
 `;
 
 export const ORDER_PAYMENT = gql`
-	mutation orderPayment {
+	mutation orderPayment($city: String!, $country: String!, $line1: String!, $postalCode: Int!) {
 		orderPayment(
 			addressDetails: {
-				address_city: "Lille"
-				address_country: "France"
-				address_line_1: "201 rue moulin"
-				address_postal_code: 59080
+				address_city: $city
+				address_country: $country
+				address_line_1: $line1
+				address_postal_code: $postalCode
 			}
 			currency: "EUR"
 		) {
+			order_id
 			clientSecret
 			publishableKey
+		}
+	}
+`;
+
+export const PAY_ORDER = gql`
+	mutation payOrder($order_id: Int!) {
+		payOrder(order_id: $order_id) {
+			order_id
+			status
+			stripe_id
 		}
 	}
 `;

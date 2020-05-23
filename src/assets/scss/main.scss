@@ -9,12 +9,19 @@
 // Default - GLOBAL
 @import "default.scss";
 
+// Layouts
+@import "layout.scss";
+
 // Pages
-@import "pages/MyOrdersPage.scss";
-@import "pages/ProductPage.scss";
-@import "pages/MyProfilePage.scss";
-@import "pages/MyCartPage.scss";
-@import "pages/MyHomePage.scss";
+@import "pages/MainLayout/MyOrdersPage.scss";
+@import "pages/MainLayout/ProductPage.scss";
+@import "pages/MainLayout/MyProfilePage.scss";
+@import "pages/MainLayout/MyCartPage.scss";
+@import "pages/MainLayout/MyHomePage.scss";
+
+@import "pages/CheckoutLayout/CheckoutOnePage.scss";
+@import "pages/CheckoutLayout/CheckoutSuccessPage.scss";
+@import "pages/CheckoutLayout/CheckoutCancelPage.scss";
 
 
 //Components
