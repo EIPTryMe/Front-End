@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LoadingComponent from "../../components/LoadingComponent";
 import CartList from "../../components/MainLayout/MyCartPage/CartList";
 import Container from "react-bootstrap/Container";
@@ -8,7 +8,16 @@ import { useQuery } from "@apollo/react-hooks";
 import { handleHttpError } from "../../utils/errorHandler";
 
 const MyCartPage = ({history}) => {
-	const { loading: isLoadingCart, error, data } = useQuery(GET_CARTS);
+	const { loading: isLoadingCart, error, data, refetch } = useQuery(GET_CARTS);
+	const [carts, setCarts] = useState([]);
+
+	useEffect(() => {
+		refetch();
+	}, [refetch]);
+
+	useEffect(() => {
+		setCarts(data ? data.cart : []);
+	}, [data]);
 
 	const onCheckout = (e) => {
 		e.preventDefault();
@@ -22,8 +31,6 @@ const MyCartPage = ({history}) => {
 		return handleHttpError(error);
 	}
 
-	const carts = data ? data.cart : [];
-
 	return (
 		<div className="my-cart">
 			<Container className="title-container">
@@ -35,7 +42,7 @@ const MyCartPage = ({history}) => {
 				</div>
 			</Container>
 			<Container className="cart-list-container">
-				{!isLoadingCart && carts && <CartList carts={carts} />}
+				{!isLoadingCart && carts && <CartList carts={carts} refetch={refetch} />}
 			</Container>
 			<Container className="text-right px-0">
 				<a href="/checkout/step-1" className="continue" onClick={onCheckout}>

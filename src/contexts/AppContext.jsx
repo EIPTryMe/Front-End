@@ -7,7 +7,9 @@ import React, { createContext, useContext, useReducer } from "react";
 export const initialContext = {
 	state: {
 		user: {},
-		params: {},
+		params: {
+			cartLength: 0
+		},
 	},
 	setUser: (payload = {}) => {},
 	changeParams: (payload = {}) => {},

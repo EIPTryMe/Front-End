@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from 'react-router-dom'
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import Badge from "react-bootstrap/Badge";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
@@ -10,7 +11,7 @@ import { useAuth0 } from "../../hooks/auth0";
 
 const NavBar = (props) => {
 	const { loading, isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
-	const { location, cartItemNumber } = props;
+	const { location, cartLength } = props;
 
 	const ButtonLogin = () => (
 		<Button variant="outline-light" className="mr-sm-2" onClick={() => loginWithRedirect({})}>
@@ -52,7 +53,7 @@ const NavBar = (props) => {
 					{!loading && isAuthenticated && (
 						<React.Fragment>
 							<Nav.Link as={NavLink} exact to="/my-cart">
-								Mon panier <span className="badge">{cartItemNumber}</span>
+								Mon panier {cartLength > 0 ? <Badge variant="danger" pill>{cartLength}</Badge> : null}
 							</Nav.Link>
 							<NavDropdown
 								title={dropdownTitle} 

@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState, useCallback} from "react";
 
 import formatPrice from "../../../../utils/formatPrice";
 
 function CartItem({ cart, onDeleteCartItem }) {
+	const [disabled, setDisabled] = useState(false);
+
 	const unit_price_per_month_formatted = formatPrice(cart.product.price_per_month);
 	const total_price_per_month_formatted = formatPrice(
 		cart.quantity * cart.product.price_per_month
@@ -13,6 +15,12 @@ function CartItem({ cart, onDeleteCartItem }) {
 		"https://via.placeholder.com/286x300/FCA311/FFFFFF?text=Tryme+placeholder",
 		"https://via.placeholder.com/286x300/000000/FFFFFF?text=Tryme+placeholder",
 	];
+
+	const onBeforeDeleteCartItem = useCallback((cart) => {
+		if (disabled) return;
+		onDeleteCartItem(cart);
+		setDisabled(true);
+	}, [disabled, onDeleteCartItem]);
 
 	return (
 		<React.Fragment>
@@ -57,7 +65,7 @@ function CartItem({ cart, onDeleteCartItem }) {
 								+
 							</button>
 						</div>
-						<p className="cart-remove" onClick={() => onDeleteCartItem(cart)}>
+						<p className="cart-remove" onClick={() => onBeforeDeleteCartItem(cart)}>
 							Retirer du panier
 						</p>
 					</div>
@@ -113,7 +121,7 @@ function CartItem({ cart, onDeleteCartItem }) {
 							</button>
 						</div>
 					</div>
-					<p className="cart-remove" onClick={() => onDeleteCartItem(cart)}>Retirer du panier</p>
+					<p className="cart-remove" onClick={() => onBeforeDeleteCartItem(cart)}>Retirer du panier</p>
 				</td>
 			</tr>
 		</React.Fragment>

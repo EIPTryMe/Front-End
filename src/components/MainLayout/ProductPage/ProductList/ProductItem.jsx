@@ -12,10 +12,14 @@ import { ADD_TO_CART } from "../../../../queries/cart";
 
 import formatPrice from "../../../../utils/formatPrice";
 
-import { NotificationManager } from 'react-notifications';
+import { NotificationManager } from "react-notifications";
+
+import useAppContext from "../../../../contexts/AppContext";
 
 function ProductItem(props) {
 	const { product } = props;
+	const context = useAppContext();
+
 	const [addToCart] = useMutation(
 		ADD_TO_CART
 		//, { context: { headers: { toto: "titi" } } }  --- TO ADD CUSTOM HEADERS
@@ -24,14 +28,17 @@ function ProductItem(props) {
 	const onAddCart = (product) => {
 		const { id: product_id } = product;
 
+		const initalCartLength = context.state.params.cartLength;
+		context.changeParams({ cartLength: context.state.params.cartLength + 1 });
 		addToCart({
 			variables: { product_id },
 		})
 			.then((added) => {
-				NotificationManager.success(`${product.name} x 1`, 'Ajout au panier');
+				NotificationManager.success(`${product.name} x 1`, "Ajout au panier");
 			})
 			.catch((error) => {
-				NotificationManager.warning(error.message, 'Attention');
+				context.changeParams({ cartLength: initalCartLength });
+				NotificationManager.warning(error.message, "Attention");
 			});
 	};
 
@@ -72,14 +79,8 @@ function ProductItem(props) {
 					<Card.Text className="product-item-price">
 						A partir de <b>€{price_per_month_formatted}</b> par mois
 					</Card.Text>
-					<Card.Text className="product-item-price">
-						Stock: {product.stock}
-					</Card.Text>
-					<Button
-						variant="success"
-						className="mt-3"
-						onClick={() => onAddCart(product)}
-					>
+					<Card.Text className="product-item-price">Stock: {product.stock}</Card.Text>
+					<Button variant="success" className="mt-3" onClick={() => onAddCart(product)}>
 						Add to Cart <FontAwesomeIcon icon={faCartPlus} />
 					</Button>
 				</Card.Body>

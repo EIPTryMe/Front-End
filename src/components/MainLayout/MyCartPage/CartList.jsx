@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import CartItem from "./CartList/CartItem";
 
 import Table from "react-bootstrap/Table";
@@ -10,54 +10,69 @@ import { useMutation } from "@apollo/react-hooks";
 
 import { NotificationManager } from "react-notifications";
 
-const MemoCartItem = React.memo(({...props}) => <CartItem {...props}/>);
+import useAppContext from "../../../contexts/AppContext";
+
+const MemoCartItem = React.memo(({ ...props }) => <CartItem {...props} />);
+
+function buildDevCarts(carts) {
+	return carts.map((cart) => {
+		if (!cart.quantity) cart.quantity = 1 || Math.floor(Math.random() * 4) + 1;
+		if (!cart.duration) cart.duration = 6;
+		if (!cart.product.product_descriptions || cart.product.product_descriptions.length === 0)
+			cart.product.product_descriptions = [
+				{
+					name:
+						'13.3" Display, Intel® i3-1000NG4 Processor, 8GB Memory, 256GB SSD Storage',
+				},
+			];
+		return cart;
+	});
+}
 
 function CartList(props) {
-	const { carts } = props;
+	const { carts, refetch } = props;
+	const context = useAppContext();
 
 	// todo remove for production
-	const [devCarts, setDevCarts] = useState(
-		carts.map((cart) => {
-			if (!cart.quantity) cart.quantity = 1 || Math.floor(Math.random() * 4) + 1;
-			if (!cart.duration) cart.duration = 6;
-			if (
-				!cart.product.product_descriptions ||
-				cart.product.product_descriptions.length === 0
-			)
-				cart.product.product_descriptions = [
-					{
-						name:
-							'13.3" Display, Intel® i3-1000NG4 Processor, 8GB Memory, 256GB SSD Storage',
-					},
-				];
-			return cart;
-		})
-	);
+	const [devCarts, setDevCarts] = useState(buildDevCarts(carts));
+
+	useEffect(() => {
+		setDevCarts(buildDevCarts(carts));
+	}, [carts]);
 
 	const [deleteCartItem] = useMutation(DEL_CART_ITEM);
 
+	const onDeleteCartItem = useCallback(
+		(cart) => {
+			const { id: cart_id } = cart;
 
-	const onDeleteCartItem = useCallback((cart) => {
-		const { id: cart_id } = cart;
-
-		deleteCartItem({
-			variables: { cart_id },
-		})
-			.then(() => {
-				setDevCarts((devCarts) => devCarts.filter((d) => d.id !== cart_id));
-				NotificationManager.success(`${cart.product.name} x 1`, "Retiré du panier");
+			const initalCartLength = context.state.params.cartLength;
+			context.changeParams({ cartLength: context.state.params.cartLength - 1 });
+			deleteCartItem({
+				variables: { cart_id },
 			})
-			.catch((error) => {
-				NotificationManager.warning(error.message, "Attention");
-			});
-			
-	}, [deleteCartItem]);
+				.then(() => {
+					//setDevCarts((devCarts) => devCarts.filter((d) => d.id !== cart_id));
+					refetch();
+					NotificationManager.success(`${cart.product.name} x 1`, "Retiré du panier");
+				})
+				.catch((error) => {
+					context.changeParams({ cartLength: initalCartLength });
+					NotificationManager.warning(error.message, "Attention");
+				});
+		},
+		[deleteCartItem, refetch, context.state.params]
+	);
 
 	return (
 		<Table bordered responsive="md" variant="light" className="cart-list-table">
 			<tbody>
 				{devCarts.map((cart) => (
-					<MemoCartItem cart={cart} key={`cart-${cart.id}`} onDeleteCartItem={onDeleteCartItem} />
+					<MemoCartItem
+						cart={cart}
+						key={`cart-${cart.id}`}
+						onDeleteCartItem={onDeleteCartItem}
+					/>
 				))}
 				<CartSummary carts={devCarts} />
 			</tbody>

@@ -1,8 +1,10 @@
 // src/react-auth0-spa.js
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
-import history from '../utils/history';
 import { useHistory } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
+import { USER_INFO } from "../queries/user";
+import useAppContext from "../contexts/AppContext";
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
 	window.history.replaceState({}, document.title, window.location.pathname);
@@ -20,8 +22,17 @@ export const Auth0Provider = ({
 	const [loading, setLoading] = useState(true);
 	const [popupOpen, setPopupOpen] = useState(false);
 
+	const [shouldExecute, executeQuery] = useState(false);
+	const { loading: loadingApollo, data: userInfos } = useQuery(USER_INFO, {
+		skip: !shouldExecute,
+	});
+
 	const history = useHistory();
+	const context = useAppContext();
+
 	useEffect(() => {
+		if (loadingApollo) return;
+
 		const initAuth0 = async () => {
 			const auth0FromHook = await createAuth0Client(initOptions);
 			setAuth0(auth0FromHook);
@@ -42,15 +53,34 @@ export const Auth0Provider = ({
 				const user = await auth0FromHook.getUser();
 				setUser(user);
 
-				const { __raw : token } = await auth0FromHook.getIdTokenClaims();
-				localStorage.setItem('token', token);
+				const { __raw: token } = await auth0FromHook.getIdTokenClaims();
+				localStorage.setItem("token", token);
+
+				executeQuery(true);
 			}
 
 			setLoading(false);
 		};
 		initAuth0();
 		// eslint-disable-next-line
-	}, []);
+	}, [loadingApollo]);
+
+	useEffect(() => {
+		if (!userInfos) return;
+		console.log("received user info: ", userInfos);
+		const { user: userInfo } = userInfos;
+		if (userInfo && Array.isArray(userInfo) && userInfo.length > 0) {
+			const builtUser = {
+				firstname: userInfo[0].first_name,
+				email: userInfo[0].email,
+				name: userInfo[0].name,
+				phone: userInfo[0].phone,
+				address: userInfo[0].address
+			};
+			context.setUser(builtUser);
+			context.changeParams({cartLength: userInfo[0].cartsUid.length});
+		}
+	}, [userInfos]);
 
 	const loginWithPopup = async (params = {}) => {
 		setPopupOpen(true);
@@ -65,8 +95,9 @@ export const Auth0Provider = ({
 		setUser(user);
 		setIsAuthenticated(true);
 
-		const { __raw : token } = await auth0Client.getIdTokenClaims();
-		localStorage.setItem('token', token);
+		const { __raw: token } = await auth0Client.getIdTokenClaims();
+		localStorage.setItem("token", token);
+		executeQuery(true);
 	};
 
 	const handleRedirectCallback = async () => {
@@ -77,8 +108,9 @@ export const Auth0Provider = ({
 		setIsAuthenticated(true);
 		setUser(user);
 
-		const { __raw : token } = await auth0Client.getIdTokenClaims();
-		localStorage.setItem('token', token);
+		const { __raw: token } = await auth0Client.getIdTokenClaims();
+		localStorage.setItem("token", token);
+		executeQuery(true);
 	};
 	return (
 		<Auth0Context.Provider
@@ -93,8 +125,8 @@ export const Auth0Provider = ({
 				loginWithRedirect: (...p) => auth0Client.loginWithRedirect(...p),
 				getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),
 				getTokenWithPopup: (...p) => auth0Client.getTokenWithPopup(...p),
-				logout: (...p) => { 
-					localStorage.removeItem('token');
+				logout: (...p) => {
+					localStorage.removeItem("token");
 
 					return auth0Client.logout(...p);
 				},

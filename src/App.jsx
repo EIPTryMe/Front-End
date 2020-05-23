@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Switch, Redirect, withRouter } from "react-router-dom";
 
 import history from "./utils/history";
 
@@ -32,40 +32,64 @@ import { client } from "./constants/graphql";
 import { ApolloProvider } from "@apollo/react-hooks";
 //GRAPHQL
 
-const Routes = () => {	
-	return (
-		<Switch>
-			<AppRoute exact path="/" layout={MainLayout} component={HomePage} title="Home" />
-			<AppRoute path="/products" layout={MainLayout} component={ProductPage} title="Produits" />
-			<AppPrivateRoute path="/my-cart" layout={MainLayout} component={MyCartPage} title="Mon panier" />
-			<AppPrivateRoute path="/profile/me" layout={MainLayout} component={MyProfilePage} title="Mon profil" />
-			<AppPrivateRoute path="/profile/orders" layout={MainLayout} component={MyOrdersPage} title="Mes commandes" />
+import { NotificationManager } from "react-notifications";
 
-			<AppPrivateRoute path="/checkout/step-1" layout={CheckoutLayout} component={CheckoutOnePage} title="Etape 1" />
-			<AppPrivateRoute path="/checkout/success" layout={CheckoutLayout} component={CheckoutSuccessPage} title="Commande validée" />
-			<AppPrivateRoute path="/checkout/cancel" layout={CheckoutLayout} component={CheckoutCancelPage} title="Commande annulée" />			
-			<Redirect from="*" to="/" />
-		</Switch>
+NotificationManager.clear = function() {
+	this.listNotify = [];
+}
+
+const RouteListener = withRouter(({history}) => {
+	useEffect(() => {
+		const unlisten = history.listen(() => {
+			NotificationManager.clear();
+		});
+		return () => {
+			unlisten();
+		}
+	}, [history]);
+
+	return null;
+});
+
+const Routes = () => {
+	return (
+		<>
+			<RouteListener/>
+			<Switch>
+				<AppRoute exact path="/" layout={MainLayout} component={HomePage} title="Home" />
+				<AppRoute path="/products" layout={MainLayout} component={ProductPage} title="Produits" />
+				<AppPrivateRoute path="/my-cart" layout={MainLayout} component={MyCartPage} title="Mon panier" />
+				<AppPrivateRoute path="/profile/me" layout={MainLayout} component={MyProfilePage} title="Mon profil" />
+				<AppPrivateRoute path="/profile/orders" layout={MainLayout} component={MyOrdersPage} title="Mes commandes" />
+
+				<AppPrivateRoute path="/checkout/step-1" layout={CheckoutLayout} component={CheckoutOnePage} title="Etape 1" />
+				<AppPrivateRoute path="/checkout/success" layout={CheckoutLayout} component={CheckoutSuccessPage} title="Commande validée" />
+				<AppPrivateRoute path="/checkout/cancel" layout={CheckoutLayout} component={CheckoutCancelPage} title="Commande annulée" />			
+				<Redirect from="*" to="/" />
+			</Switch>
+		</>
 	);
 };
 
 // Router must wrap everything so it can redirects.
-const App = () => (
-	<Router history={history}>
-		<AppContextProvider>
-			<ApolloProvider client={client}>
-				<Auth0Provider
-					domain={config.domain}
-					client_id={config.clientId}
-					audience={config.audience}
-					redirect_uri={window.location.origin}
-					onRedirectCallback={onRedirectCallback}
-				>
-					<Routes />
-				</Auth0Provider>
-			</ApolloProvider>
-		</AppContextProvider>
-	</Router>
-);
+const App = () => {
+	return (
+		<Router history={history}>
+			<AppContextProvider>
+				<ApolloProvider client={client}>
+					<Auth0Provider
+						domain={config.domain}
+						client_id={config.clientId}
+						audience={config.audience}
+						redirect_uri={window.location.origin}
+						onRedirectCallback={onRedirectCallback}
+					>
+						<Routes />
+					</Auth0Provider>
+				</ApolloProvider>
+			</AppContextProvider>
+		</Router>
+	);
+};
 
 export default App;
