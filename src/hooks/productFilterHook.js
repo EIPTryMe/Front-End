@@ -13,7 +13,7 @@ function useProductFilter() {
         };
         
         setFilters(newFilters);
-    }, []);
+    }, [filters]);
 
     const onChangeOrderBy = useCallback((event) => {
         const value = event.target.value;
@@ -50,7 +50,7 @@ function useProductFilter() {
 			},
         };
         setFilters(newFilters);
-    });
+    }, [filters]);
 
 	return {
 		filters,

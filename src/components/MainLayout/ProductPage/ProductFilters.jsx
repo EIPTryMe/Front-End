@@ -11,7 +11,7 @@ function ProductFilters(props) {
 	const [priceRange, setPriceRange] = useState([sliderMin, sliderMax]);
 	const { onAfterChangePriceRange, onChangeOrderBy } = props;
 
-	const onChangePriceRange = useCallback((values) => setPriceRange([values[0], values[1]]), [priceRange]);
+	const onChangePriceRange = useCallback((values) => setPriceRange([values[0], values[1]]), []);
 
 	return (
 		<div className="product-filters">

@@ -51,7 +51,7 @@ function CartList(props) {
 				NotificationManager.warning(error.message, "Attention");
 			});
 			
-	}, []);
+	}, [deleteCartItem]);
 
 	return (
 		<Table bordered responsive="md" variant="light" className="cart-list-table">
