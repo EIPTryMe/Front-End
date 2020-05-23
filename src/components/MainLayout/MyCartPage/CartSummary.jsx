@@ -8,7 +8,7 @@ function CartSummary(props) {
 	const subTotal = formatPrice(
 		carts.reduce((sum, cart) => sum + cart.product.price_per_month * cart.quantity, 0)
 	);
-	const shipping = formatPrice(5);
+	const shipping = formatPrice(0);
 	const total = formatPrice(+subTotal + +shipping);
 
 	const MainContent = ({ colSpan }) => (

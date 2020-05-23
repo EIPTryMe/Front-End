@@ -11,8 +11,8 @@
             margin: 0 auto;
             padding: 10px;
 
-            &:not(:last-child) {
-                border-bottom: 1px dashed grey;
+            &:not(:first-of-type) {
+                border-top: 1px dashed grey;
             }
 
             .line-title {
@@ -21,7 +21,7 @@
             }
 
             .line-content {
-
+                min-width: 250px;
             }
 
         }

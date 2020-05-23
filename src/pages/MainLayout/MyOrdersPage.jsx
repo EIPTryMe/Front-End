@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth0 } from "../../hooks/auth0";
 
 import LoadingComponent from "../../components/LoadingComponent";
@@ -12,7 +12,11 @@ import { handleHttpError } from "../../utils/errorHandler";
 
 const MyOrdersPage = () => {
 	const { loading: isLoadingAuth, user } = useAuth0();
-	const { loading: isLoadingOrders, error, data } = useQuery(GET_ORDERS);
+	const { loading: isLoadingOrders, error, data, refetch } = useQuery(GET_ORDERS);
+
+	useEffect(() => {
+		refetch();
+	}, [refetch]);
 
 	if (isLoadingAuth || isLoadingOrders) {
 		return <LoadingComponent/>;

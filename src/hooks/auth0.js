@@ -59,28 +59,31 @@ export const Auth0Provider = ({
 				executeQuery(true);
 			}
 
-			setLoading(false);
+			// setLoading(false);
 		};
 		initAuth0();
 		// eslint-disable-next-line
 	}, [loadingApollo]);
 
 	useEffect(() => {
-		if (!userInfos) return;
-		console.log("received user info: ", userInfos);
+		if (!userInfos || !user) return;
 		const { user: userInfo } = userInfos;
 		if (userInfo && Array.isArray(userInfo) && userInfo.length > 0) {
 			const builtUser = {
+				picture: user.picture,
+				uid: user.sub,
 				firstname: userInfo[0].first_name,
 				email: userInfo[0].email,
 				name: userInfo[0].name,
 				phone: userInfo[0].phone,
-				address: userInfo[0].address
+				address: userInfo[0].address,
+				company: userInfo[0].company
 			};
 			context.setUser(builtUser);
 			context.changeParams({cartLength: userInfo[0].cartsUid.length});
+			setLoading(false);
 		}
-	}, [userInfos]);
+	}, [userInfos, user]);
 
 	const loginWithPopup = async (params = {}) => {
 		setPopupOpen(true);
