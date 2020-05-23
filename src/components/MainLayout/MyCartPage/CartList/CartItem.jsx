@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from "react";
+import React, {useState, useCallback, useMemo} from "react";
 
 import formatPrice from "../../../../utils/formatPrice";
 
@@ -16,6 +16,10 @@ function CartItem({ cart, onDeleteCartItem }) {
 		"https://via.placeholder.com/286x300/000000/FFFFFF?text=Tryme+placeholder",
 	];
 
+	const randomImg = useMemo(() => {
+		return imgs[Math.floor(Math.random() * 3)];
+	}, []);
+
 	const onBeforeDeleteCartItem = useCallback((cart) => {
 		if (disabled) return;
 		onDeleteCartItem(cart);
@@ -29,7 +33,7 @@ function CartItem({ cart, onDeleteCartItem }) {
 				<td>
 					<div className="cart-item-img-container">
 						<img
-							src={imgs[Math.floor(Math.random() * 3)]}
+							src={randomImg}
 							alt=""
 							className="cart-item-img"
 						/>
@@ -85,7 +89,7 @@ function CartItem({ cart, onDeleteCartItem }) {
 				<td>
 					<div className="cart-item-img-container">
 						<img
-							src={imgs[Math.floor(Math.random() * 3)]}
+							src={randomImg}
 							alt=""
 							className="cart-item-img"
 						/>

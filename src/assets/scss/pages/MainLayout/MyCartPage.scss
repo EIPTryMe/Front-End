@@ -295,7 +295,7 @@
 		}
 	}
 
-	.btn {
+	.btn:not(.goToShop) {
 		&:link,
 		&:visited {
 			text-decoration: none;
