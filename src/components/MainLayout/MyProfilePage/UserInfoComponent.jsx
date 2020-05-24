@@ -71,9 +71,9 @@ const UserInfoComponent = () => {
 
 		userUpdate({ variables: { ...formattedValues, uid: user.uid } })
 			.then(({ data }) => {
-				const newCompany = data.update_user.returning[0].company;
+				const newUser = data.update_user.returning[0];
 
-				context.setUser({ ...user, company: newCompany });
+				context.setUser({ ...user, ...newUser});
 				NotificationManager.success(`Mise à jours effectuée`, "Informations éditées");
 			})
 			.catch((error) => {

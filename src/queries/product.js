@@ -20,3 +20,11 @@ export const GET_PRODUCTS = gql`
 		}
 	}
 `;
+
+export const PRODUCT_ADD = gql`
+	mutation AddProduct($stock: Int!, $name: String!, $price_per_month: float8!) {
+		createProduct(stock: $stock, name: $name, price_per_month: $price_per_month) {
+			id
+		}
+	}
+`;

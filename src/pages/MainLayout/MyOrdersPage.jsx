@@ -11,7 +11,7 @@ import { handleHttpError } from "../../utils/errorHandler";
 
 
 const MyOrdersPage = () => {
-	const { loading: isLoadingAuth, user } = useAuth0();
+	const { loading: isLoadingAuth } = useAuth0();
 	const { loading: isLoadingOrders, error, data, refetch } = useQuery(GET_ORDERS);
 
 	useEffect(() => {
@@ -24,14 +24,6 @@ const MyOrdersPage = () => {
 		return handleHttpError(error);
 	}
 
-	//todo remove for prod FOR TESTING
-	user.company = {
-		name: "EIP",
-		siret: "000198765467",
-		address: "123 rue test",
-		phone: "+33612345678",
-	};
-
 	const orders = data ? data.order : [];
 
 	return (
@@ -40,10 +32,6 @@ const MyOrdersPage = () => {
 		
 			{!isLoadingOrders && orders && <OrderList orders={orders} />}
 	
-			{user.company && <React.Fragment></React.Fragment>}
-
-			<code>{JSON.stringify(data, null, 4)}</code>
-			{console.log(JSON.stringify(data, null, 4))}
 		</Container>
 	);
 };
