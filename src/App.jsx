@@ -13,10 +13,15 @@ import CheckoutOnePage from "./pages/CheckoutLayout/CheckoutOnePage";
 import CheckoutSuccessPage from "./pages/CheckoutLayout/CheckoutSuccessPage";
 import CheckoutCancelPage from "./pages/CheckoutLayout/CheckoutCancelPage";
 
+import DashboardPage from "./pages/CompanyLayout/DashboardPage";
+import AddProductPage from "./pages/CompanyLayout/AddProductPage";
+import SalesPage from "./pages/CompanyLayout/SalesPage";
+
 import { AppContextProvider } from "./contexts/AppContext";
 
 import MainLayout from "./layouts/MainLayout";
 import CheckoutLayout from "./layouts/CheckoutLayout";
+import CompanyLayout from "./layouts/CompanyLayout";
 
 import AppRoute from "./components/Route/AppRoute";
 import AppPrivateRoute from "./components/Route/AppPrivateRoute";
@@ -61,6 +66,10 @@ const Routes = () => {
 				<AppPrivateRoute path="/my-cart" layout={MainLayout} component={MyCartPage} title="Mon panier" />
 				<AppPrivateRoute path="/profile/me" layout={MainLayout} component={MyProfilePage} title="Mon profil" />
 				<AppPrivateRoute path="/profile/orders" layout={MainLayout} component={MyOrdersPage} title="Mes commandes" />
+
+				<AppPrivateRoute path="/company/dashboard" layout={CompanyLayout} component={DashboardPage} title="Mon entreprise | Dashboard" />
+				<AppPrivateRoute path="/company/add_product" layout={CompanyLayout} component={AddProductPage} title="Mon entreprise | Nouveau produit" />
+				<AppPrivateRoute path="/company/sales" layout={CompanyLayout} component={SalesPage} title="Mon entreprise | Mes ventes" />
 
 				<AppPrivateRoute path="/checkout/step-1" layout={CheckoutLayout} component={CheckoutOnePage} title="Etape 1" />
 				<AppPrivateRoute path="/checkout/success" layout={CheckoutLayout} component={CheckoutSuccessPage} title="Commande validée" />
