@@ -4,12 +4,12 @@ import ProductItem from "./ProductList/ProductItem";
 import Row from "react-bootstrap/Row";
 
 function ProductList(props) {
-	const { products } = props;
+	const { products, history } = props;
 
 	return (
 		<Row noGutters={true}>
 			{products.map((product, index) => (
-				<ProductItem key={`product-${product.id}`} product={product} />
+				<ProductItem key={`product-${product.id}`} product={product} history={history}/>
 			))}
 		</Row>
 	);

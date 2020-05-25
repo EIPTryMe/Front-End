@@ -17,7 +17,7 @@ import { NotificationManager } from "react-notifications";
 import useAppContext from "../../../../contexts/AppContext";
 
 function ProductItem(props) {
-	const { product } = props;
+	const { product,history  } = props;
 	const context = useAppContext();
 
 	const [addToCart] = useMutation(
@@ -49,7 +49,7 @@ function ProductItem(props) {
 	return (
 		<Col xs="12" sm="6" md="4">
 			<Card className="product-card">
-				<Carousel interval={null}>
+				<Carousel interval={null} onClick={() => props.history.push('/products/'+product.id, {product: product})}>
 					<Carousel.Item>
 						<Card.Img
 							variant="top"

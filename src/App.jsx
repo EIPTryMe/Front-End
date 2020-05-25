@@ -8,6 +8,7 @@ import ProductPage from "./pages/MainLayout/ProductPage";
 import MyCartPage from "./pages/MainLayout/MyCartPage";
 import MyProfilePage from "./pages/MainLayout/MyProfilePage";
 import MyOrdersPage from "./pages/MainLayout/MyOrdersPage";
+import MyProductDetailPage from "./pages/MainLayout/ProductDetails";
 
 import CheckoutOnePage from "./pages/CheckoutLayout/CheckoutOnePage";
 import CheckoutSuccessPage from "./pages/CheckoutLayout/CheckoutSuccessPage";
@@ -62,8 +63,9 @@ const Routes = () => {
 			<RouteListener/>
 			<Switch>
 				<AppRoute exact path="/" layout={MainLayout} component={HomePage} title="Home" />
-				<AppRoute path="/products" layout={MainLayout} component={ProductPage} title="Produits" />
+				<AppRoute exact path="/products" layout={MainLayout} component={ProductPage} title="Produits" />
 				<AppPrivateRoute path="/my-cart" layout={MainLayout} component={MyCartPage} title="Mon panier" />
+				<AppRoute path="/products/:product_id" layout={MainLayout} component={MyProductDetailPage} title="ProduitsDetails" />
 				<AppPrivateRoute path="/profile/me" layout={MainLayout} component={MyProfilePage} title="Mon profil" />
 				<AppPrivateRoute path="/profile/orders" layout={MainLayout} component={MyOrdersPage} title="Mes commandes" />
 
@@ -73,7 +75,7 @@ const Routes = () => {
 
 				<AppPrivateRoute path="/checkout/step-1" layout={CheckoutLayout} component={CheckoutOnePage} title="Etape 1" />
 				<AppPrivateRoute path="/checkout/success" layout={CheckoutLayout} component={CheckoutSuccessPage} title="Commande validée" />
-				<AppPrivateRoute path="/checkout/cancel" layout={CheckoutLayout} component={CheckoutCancelPage} title="Commande annulée" />			
+				<AppPrivateRoute path="/checkout/cancel" layout={CheckoutLayout} component={CheckoutCancelPage} title="Commande annulée" />
 				<Redirect from="*" to="/" />
 			</Switch>
 		</>

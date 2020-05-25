@@ -10,7 +10,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { handleHttpError } from "../../utils/errorHandler";
 import { useProductFilter } from "../../hooks/productFilterHook";
 
-const ProductPage = () => {
+const ProductPage = ({history}) => {
 	const { filters, ...filterHandlers } = useProductFilter();
 	const { loading: isLoadingProducts, error, data = { product: [] } } = useQuery(GET_PRODUCTS, {
 		variables: { ...filters }
@@ -25,7 +25,7 @@ const ProductPage = () => {
 			<Container className="product-list-container">
 				{isLoadingProducts && <LoadingComponent />}
 				{!isLoadingProducts && !!error && handleHttpError(error)}
-				{!isLoadingProducts && !error && products && <ProductList products={products} />}
+				{!isLoadingProducts && !error && products && <ProductList products={products} history={history}/>}
 			</Container>
 		</div>
 	);
