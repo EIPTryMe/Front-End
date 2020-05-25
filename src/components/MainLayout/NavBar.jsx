@@ -28,7 +28,7 @@ const NavBar = (props) => {
 		<span>
 			<img className="avatar" src={user.picture} alt="" /> {user.name}
 		</span>
-	) : null;
+	) : '';
 
 	const onLogout = (e) => {
 		e.preventDefault();
@@ -61,7 +61,7 @@ const NavBar = (props) => {
 					{!loading && !isAuthenticated && <ButtonLogin />}
 					{!loading && isAuthenticated && (
 						<React.Fragment>
-							{user.company && (
+							{user && user.company && (
 								<Nav.Link as={NavLink} exact to="/company/dashboard">
 									Mon entreprise
 								</Nav.Link>

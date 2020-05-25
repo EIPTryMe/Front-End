@@ -59,7 +59,7 @@ export const Auth0Provider = ({
 				executeQuery(true);
 			}
 
-			// setLoading(false);
+			setLoading(false);
 		};
 		initAuth0();
 		// eslint-disable-next-line
@@ -69,6 +69,8 @@ export const Auth0Provider = ({
 		if (!userInfos || !user) return;
 		const { user: userInfo } = userInfos;
 		if (userInfo && Array.isArray(userInfo) && userInfo.length > 0) {
+			console.log('ici');
+
 			const builtUser = {
 				picture: user.picture,
 				uid: user.sub,
