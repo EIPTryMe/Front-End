@@ -1,10 +1,7 @@
-// src/react-auth0-spa.js
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
 import { useHistory } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
-import { USER_INFO } from "../queries/user";
-import useAppContext from "../contexts/AppContext";
+import useUserInfo from "./userInfo";
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
 	window.history.replaceState({}, document.title, window.location.pathname);
@@ -22,17 +19,11 @@ export const Auth0Provider = ({
 	const [loading, setLoading] = useState(true);
 	const [popupOpen, setPopupOpen] = useState(false);
 
-	const [shouldExecute, executeQuery] = useState(false);
-	const { loading: loadingApollo, data: userInfos } = useQuery(USER_INFO, {
-		skip: !shouldExecute,
-	});
+	const { fetchUserInfo, userInfo, isFetching } = useUserInfo(user);
 
 	const history = useHistory();
-	const context = useAppContext();
 
 	useEffect(() => {
-		if (loadingApollo) return;
-
 		const initAuth0 = async () => {
 			const auth0FromHook = await createAuth0Client(initOptions);
 			setAuth0(auth0FromHook);
@@ -56,36 +47,14 @@ export const Auth0Provider = ({
 				const { __raw: token } = await auth0FromHook.getIdTokenClaims();
 				localStorage.setItem("token", token);
 
-				executeQuery(true);
+				fetchUserInfo();
 			}
 
 			setLoading(false);
 		};
 		initAuth0();
 		// eslint-disable-next-line
-	}, [loadingApollo]);
-
-	useEffect(() => {
-		if (!userInfos || !user) return;
-		const { user: userInfo } = userInfos;
-		if (userInfo && Array.isArray(userInfo) && userInfo.length > 0) {
-			console.log('ici');
-
-			const builtUser = {
-				picture: user.picture,
-				uid: user.sub,
-				firstname: userInfo[0].first_name,
-				email: userInfo[0].email,
-				name: userInfo[0].name,
-				phone: userInfo[0].phone,
-				address: userInfo[0].address,
-				company: userInfo[0].company
-			};
-			context.setUser(builtUser);
-			context.changeParams({cartLength: userInfo[0].cartsUid.length});
-			setLoading(false);
-		}
-	}, [userInfos, user]);
+	}, []);
 
 	const loginWithPopup = async (params = {}) => {
 		setPopupOpen(true);
@@ -102,7 +71,6 @@ export const Auth0Provider = ({
 
 		const { __raw: token } = await auth0Client.getIdTokenClaims();
 		localStorage.setItem("token", token);
-		executeQuery(true);
 	};
 
 	const handleRedirectCallback = async () => {
@@ -115,7 +83,6 @@ export const Auth0Provider = ({
 
 		const { __raw: token } = await auth0Client.getIdTokenClaims();
 		localStorage.setItem("token", token);
-		executeQuery(true);
 	};
 	return (
 		<Auth0Context.Provider

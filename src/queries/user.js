@@ -31,7 +31,7 @@ export const USER_UPDATE = gql`
 		$name: String!
 		$email: String!
 		$address: String!
-		$phone: Int!
+		$phone: String!
 		$company_id: Int
 		$uid: String!
 	) {

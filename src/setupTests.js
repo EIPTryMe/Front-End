@@ -29,7 +29,7 @@ const fakeUser = {
 	sub: "auth0|5eb4d1213b10d60c015fd867",
 	uid: "auth0|5eb4d1213b10d60c015fd867",
 	firstname: "thibaut",
-	phone: 1234567,
+	phone: "1234567",
 	address: "8 rue jean moulin",
 	company: {
 		id: 42,

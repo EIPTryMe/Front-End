@@ -15,28 +15,39 @@ import { NotificationManager } from "react-notifications";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
+import useAppContext from "../../contexts/AppContext";
+
 const schema = Yup.object({
 	name: Yup.string().required(),
 	stock: Yup.number().min(1).required(),
 	price_per_month: Yup.number().min(5).required(),
+	company_id: Yup.number().nullable(),
 });
 
 const SalesPage = () => {
-	const { loading, user } = useAuth0();
+	const { loading } = useAuth0();
+	const context = useAppContext();
+
+	const { user } = context.state;
 
 	const [addProduct] = useMutation(PRODUCT_ADD);
 
 	if (loading || !user) {
 		return <LoadingComponent />;
 	}
+	console.log("user", user);
 
 	const initialValues = {
 		name: "",
 		stock: 0,
 		price_per_month: 0,
+		company_id: user.company ? user.company.id : null,
 	};
 
+	console.log("initial vallue", initialValues);
+
 	const onSubmit = (values) => {
+		console.log(values);
 		addProduct({ variables: values })
 			.then((data) => {
 				NotificationManager.success(
@@ -74,6 +85,11 @@ const SalesPage = () => {
 					setFieldTouched,
 				}) => (
 					<Form noValidate onSubmit={handleSubmit}>
+						<input
+							type="hidden"
+							name="company_id"
+							value={values.company_id}
+						/>
 						<Form.Row>
 							<Form.Group as={Col}>
 								<Form.Label>Nom du produit:</Form.Label>

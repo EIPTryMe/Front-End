@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 
 import LoadingComponent from "../../components/LoadingComponent";
@@ -12,10 +12,14 @@ import { useProductFilter } from "../../hooks/productFilterHook";
 
 const ProductPage = ({history}) => {
 	const { filters, ...filterHandlers } = useProductFilter();
-	const { loading: isLoadingProducts, error, data = { product: [] } } = useQuery(GET_PRODUCTS, {
+	const { loading: isLoadingProducts, error, data = { product: [] }, refetch } = useQuery(GET_PRODUCTS, {
 		variables: { ...filters }
 	});
 	const products = useMemo(() => data.product, [data.product]);
+
+	useEffect(() => {
+		refetch();
+	}, [refetch]);
 
 	return (
 		<div className="my-products">

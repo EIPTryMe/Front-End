@@ -22,7 +22,9 @@ const schema = Yup.object({
 	name: Yup.string().required(),
 	email: Yup.string().required(),
 	address: Yup.string().required(),
-	phone: Yup.string().required(),
+	phone: Yup.string()
+		.matches(/^((\+)33|0)[1-9](\d{2}){4}$/, 'Le numéro doit être sous ce format: +3312345678')
+		.required(),
 	company_id: Yup.number(),
 	// phone: Yup.bool().oneOf([true]),
 });
@@ -73,7 +75,7 @@ const UserInfoComponent = () => {
 			.then(({ data }) => {
 				const newUser = data.update_user.returning[0];
 
-				context.setUser({ ...user, ...newUser});
+				context.setUser({ ...user, ...newUser });
 				NotificationManager.success(`Mise à jours effectuée`, "Informations éditées");
 			})
 			.catch((error) => {
@@ -168,18 +170,21 @@ const UserInfoComponent = () => {
 					</div>
 					<div className="line">
 						<p className="line-title">Téléphone:</p>
-						<p className="line-content">
+						<div className="line-content">
 							<Form.Control
 								type="text"
 								name="phone"
 								className="line-content"
-								placeholder={"Téléphone"}
+								placeholder={"+33612345678"}
 								value={values.phone}
 								onChange={(e) => setFieldTouched("phone") && handleChange(e)}
 								isInvalid={touched.phone && !!errors.phone}
 								isValid={touched.phone && !errors.phone}
 							/>
-						</p>
+							<Form.Control.Feedback type="invalid">
+								{errors.phone}
+							</Form.Control.Feedback>
+						</div>
 					</div>
 					<div className="line">
 						<p className="line-title">Entreprise:</p>

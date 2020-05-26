@@ -50,10 +50,10 @@ const NavBar = (props) => {
 			<Navbar.Collapse id="responsive-navbar-nav">
 				<Nav className="mr-auto" activeKey={location.pathname}>
 					<Nav.Link as={NavLink} exact to="/">
-						Home
+						Accueil
 					</Nav.Link>
 					<Nav.Link as={NavLink} exact to="/products">
-						Products
+						Produits
 					</Nav.Link>
 				</Nav>
 				<Nav activeKey={location.pathname}>
