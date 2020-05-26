@@ -35,7 +35,6 @@ const SalesPage = () => {
 	if (loading || !user) {
 		return <LoadingComponent />;
 	}
-	console.log("user", user);
 
 	const initialValues = {
 		name: "",
@@ -44,10 +43,7 @@ const SalesPage = () => {
 		company_id: user.company ? user.company.id : null,
 	};
 
-	console.log("initial vallue", initialValues);
-
 	const onSubmit = (values) => {
-		console.log(values);
 		addProduct({ variables: values })
 			.then((data) => {
 				NotificationManager.success(
