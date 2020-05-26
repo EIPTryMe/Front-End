@@ -6,7 +6,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 import ls from "./utils/testingLocalStorage";
 import ApolloClient from "apollo-boost";
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 
 ls.setLocalStorage();
 
@@ -20,19 +20,27 @@ const fakeUser = {
 		"x-hasura-user-id": "auth0|5eb4d1213b10d60c015fd867",
 	},
 	nickname: "thibaut",
-	name: "thibaut@test.fra",
+	name: "Thibaut T.",
 	picture:
 		"https://s.gravatar.com/avatar/7c75a6d0353406bd3b978045f4d22a4f?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fth.png",
-	updated_at: "2020-05-17T19:03:17.375Z",
+	updated_at: "2020-05-25T23:04:19.119Z",
 	email: "thibaut@test.fra",
 	email_verified: false,
-	iss: "https://dev-2o6a8byc.eu.auth0.com/",
 	sub: "auth0|5eb4d1213b10d60c015fd867",
-	aud: "YIfBoxMsxuVG6iTGNlxX3g7lvecyzrVQ",
-	iat: 1589773037,
-	exp: 1589809037,
-	nonce: "M3A5UzFGNVMzM2hmRWhpY2h4MFZlWWFEcWZyNzhUanVfV1Z0Si44X2s4YQ==",
-	//company: { name: "EIP", siret: "000198765467", address: "123 rue test", phone: "+33612345678" },
+	uid: "auth0|5eb4d1213b10d60c015fd867",
+	firstname: "thibaut",
+	phone: 1234567,
+	address: "8 rue jean moulin",
+	company: {
+		id: 42,
+		name: "EIP",
+		email: "eip@eip.com",
+		phone: "0123456789",
+		address: "123 rue premiere",
+		siret: "124578",
+		siren: "1245789633",
+		__typename: "company",
+	},
 };
 
 const products = [
@@ -139,7 +147,7 @@ const products = [
 
 const client = new ApolloClient({
 	uri: "https://tryme-backend.herokuapp.com/v1/graphql",
-	fetch: fetch
+	fetch: fetch,
 });
 
 localStorage.setItem("token", TOKEN);

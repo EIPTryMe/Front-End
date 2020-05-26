@@ -4,10 +4,10 @@ import ls from "../utils/testingLocalStorage";
 //GRAPHQL
 import { ApolloProvider } from "@apollo/react-hooks";
 //GRAPHQL
-import ProductList from "../components/ProductList/ProductList";
+import ProductList from "../components/MainLayout/ProductPage/ProductList";
 import renderer from "react-test-renderer";
 
-import ProductItem from "../components/ProductList/ProductItem";
+import ProductItem from "../components/MainLayout/ProductPage/ProductList/ProductItem";
 
 describe("Product", () => {
 	beforeAll(() => {
@@ -27,7 +27,7 @@ describe("Product", () => {
 		expect(component.toJSON()).toMatchSnapshot();
 	});
 
-    it("render the right number of product", () => {
+	it("render the right number of product", () => {
 		const products = JSON.parse(localStorage.getItem("products"));
 		const client = localStorage.getItem("client");
 
@@ -41,7 +41,7 @@ describe("Product", () => {
 
 		const productItems = root.findAllByType(ProductItem);
 
-        expect(productItems.length).toEqual(products.length);
+		expect(productItems.length).toEqual(products.length);
 	});
 
 	it("Pass product prop to every products", () => {
@@ -59,9 +59,7 @@ describe("Product", () => {
 		const productItems = root.findAllByType(ProductItem);
 
 		productItems.forEach((productItem) => {
-            expect(productItem.props.product)
-            .toBeDefined()
-            .not.toBeNull();
+			expect(productItem.props.product).toBeDefined().not.toBeNull();
 		});
 	});
 });

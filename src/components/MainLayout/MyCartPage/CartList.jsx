@@ -46,18 +46,15 @@ function CartList(props) {
 		(cart) => {
 			const { id: cart_id } = cart;
 
-			const initalCartLength = context.state.params.cartLength;
-			context.changeParams({ cartLength: context.state.params.cartLength - 1 });
-			deleteCartItem({
+			return deleteCartItem({
 				variables: { cart_id },
 			})
 				.then(() => {
-					//setDevCarts((devCarts) => devCarts.filter((d) => d.id !== cart_id));
+					context.changeParams({ cartLength: context.state.params.cartLength - 1 });
 					refetch();
 					NotificationManager.success(`${cart.product.name} x 1`, "Retiré du panier");
 				})
 				.catch((error) => {
-					context.changeParams({ cartLength: initalCartLength });
 					NotificationManager.warning(error.message, "Attention");
 				});
 		},

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMutation } from "@apollo/react-hooks";
@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 
 import { ADD_TO_CART } from "../../../../queries/cart";
 
@@ -17,8 +18,9 @@ import { NotificationManager } from "react-notifications";
 import useAppContext from "../../../../contexts/AppContext";
 
 function ProductItem(props) {
-	const { product,history  } = props;
+	const { product, history } = props;
 	const context = useAppContext();
+	const [isAdding, setIsAdding] = useState(false);
 
 	const [addToCart] = useMutation(
 		ADD_TO_CART
@@ -27,17 +29,18 @@ function ProductItem(props) {
 
 	const onAddCart = (product) => {
 		const { id: product_id } = product;
-
-		const initalCartLength = context.state.params.cartLength;
-		context.changeParams({ cartLength: context.state.params.cartLength + 1 });
+		if (isAdding) return;
+		setIsAdding(true);
 		addToCart({
 			variables: { product_id },
 		})
 			.then((added) => {
+				context.changeParams({ cartLength: context.state.params.cartLength + 1 });
+				setIsAdding(false);
 				NotificationManager.success(`${product.name} x 1`, "Ajout au panier");
 			})
 			.catch((error) => {
-				context.changeParams({ cartLength: initalCartLength });
+				setIsAdding(false);
 				NotificationManager.warning(error.message, "Attention");
 			});
 	};
@@ -46,10 +49,16 @@ function ProductItem(props) {
 		product.price_per_month,
 	]);
 
+	const goToProductDetails = () => history.push("/products/" + product.id, { product: product });
+
 	return (
 		<Col xs="12" sm="6" md="4">
 			<Card className="product-card">
-				<Carousel interval={null} onClick={() => props.history.push('/products/'+product.id, {product: product})}>
+				<Carousel
+					interval={null}
+					onClick={goToProductDetails}
+					style={{ cursor: "pointer" }}
+				>
 					<Carousel.Item>
 						<Card.Img
 							variant="top"
@@ -69,7 +78,7 @@ function ProductItem(props) {
 						/>
 					</Carousel.Item>
 				</Carousel>
-				<Card.Body>
+				<Card.Body onClick={goToProductDetails} style={{ cursor: "pointer" }}>
 					<Card.Title className="product-item-title">
 						<b>{product.name}</b>
 					</Card.Title>
@@ -80,10 +89,15 @@ function ProductItem(props) {
 						A partir de <b>€{price_per_month_formatted}</b> par mois
 					</Card.Text>
 					<Card.Text className="product-item-price">Stock: {product.stock}</Card.Text>
-					<Button variant="success" className="mt-3" onClick={() => onAddCart(product)}>
-						Add to Cart <FontAwesomeIcon icon={faCartPlus} />
-					</Button>
 				</Card.Body>
+				<Card.Footer>
+					{isAdding && <Spinner animation="border" variant="success" />}
+					{!isAdding && (
+						<Button variant="success" onClick={() => onAddCart(product)}>
+							Ajouter au panier <FontAwesomeIcon icon={faCartPlus} />
+						</Button>
+					)}
+				</Card.Footer>
 			</Card>
 		</Col>
 	);

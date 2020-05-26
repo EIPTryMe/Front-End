@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import Accordion from "react-bootstrap/Accordion";
 import OrderItem from "./OrderList/OrderItem";
 import Table from "react-bootstrap/Table";
-
 
 export default class OrderList extends Component {
 	render() {
@@ -10,16 +8,15 @@ export default class OrderList extends Component {
 
 		return (
 			<div>
-			<Table striped bordered hover responsive="lg" variant="dark">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Adresse facturation</th>
-						<th>Produits</th>
-					</tr>
-				</thead>
-
-			</Table>
+				<Table striped bordered hover responsive="lg" variant="dark">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Adresse facturation</th>
+							<th>Produits</th>
+						</tr>
+					</thead>
+				</Table>
 				{orders.map((order, index) => (
 					<OrderItem key={`order-${order.id}`} order={order} />
 				))}

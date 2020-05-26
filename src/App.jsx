@@ -5,10 +5,11 @@ import history from "./utils/history";
 
 import HomePage from "./pages/MainLayout/HomePage";
 import ProductPage from "./pages/MainLayout/ProductPage";
+import ProductDetailsPage from "./pages/MainLayout/ProductDetailsPage";
+
 import MyCartPage from "./pages/MainLayout/MyCartPage";
 import MyProfilePage from "./pages/MainLayout/MyProfilePage";
 import MyOrdersPage from "./pages/MainLayout/MyOrdersPage";
-import MyProductDetailPage from "./pages/MainLayout/ProductDetails";
 
 import CheckoutOnePage from "./pages/CheckoutLayout/CheckoutOnePage";
 import CheckoutSuccessPage from "./pages/CheckoutLayout/CheckoutSuccessPage";
@@ -65,7 +66,7 @@ const Routes = () => {
 				<AppRoute exact path="/" layout={MainLayout} component={HomePage} title="Home" />
 				<AppRoute exact path="/products" layout={MainLayout} component={ProductPage} title="Produits" />
 				<AppPrivateRoute path="/my-cart" layout={MainLayout} component={MyCartPage} title="Mon panier" />
-				<AppRoute path="/products/:product_id" layout={MainLayout} component={MyProductDetailPage} title="ProduitsDetails" />
+				<AppRoute path="/products/:product_id" layout={MainLayout} component={ProductDetailsPage} title="Détail produit" />
 				<AppPrivateRoute path="/profile/me" layout={MainLayout} component={MyProfilePage} title="Mon profil" />
 				<AppPrivateRoute path="/profile/orders" layout={MainLayout} component={MyOrdersPage} title="Mes commandes" />
 

@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useMemo} from "react";
+import React, { useState, useCallback, useMemo } from "react";
 
 import formatPrice from "../../../../utils/formatPrice";
 
@@ -20,11 +20,20 @@ function CartItem({ cart, onDeleteCartItem }) {
 		return imgs[Math.floor(Math.random() * 3)];
 	}, []);
 
-	const onBeforeDeleteCartItem = useCallback((cart) => {
-		if (disabled) return;
-		onDeleteCartItem(cart);
-		setDisabled(true);
-	}, [disabled, onDeleteCartItem]);
+	const onBeforeDeleteCartItem = useCallback(
+		(cart) => {
+			if (disabled) return;
+			setDisabled(true);
+			onDeleteCartItem(cart)
+			.then(() => {
+				setDisabled(false);
+			})
+			.catch(() => {
+				setDisabled(false);
+			});
+		},
+		[disabled, onDeleteCartItem]
+	);
 
 	return (
 		<React.Fragment>
@@ -32,11 +41,7 @@ function CartItem({ cart, onDeleteCartItem }) {
 			<tr className="cart-item d-none d-md-table-row">
 				<td>
 					<div className="cart-item-img-container">
-						<img
-							src={randomImg}
-							alt=""
-							className="cart-item-img"
-						/>
+						<img src={randomImg} alt="" className="cart-item-img" />
 					</div>
 				</td>
 				<td>
@@ -69,9 +74,11 @@ function CartItem({ cart, onDeleteCartItem }) {
 								+
 							</button>
 						</div>
-						<p className="cart-remove" onClick={() => onBeforeDeleteCartItem(cart)}>
-							Retirer du panier
-						</p>
+						{!disabled && (
+							<p className="cart-remove" onClick={() => onBeforeDeleteCartItem(cart)}>
+								Retirer du panier
+							</p>
+						)}
 					</div>
 				</td>
 				<td>
@@ -88,11 +95,7 @@ function CartItem({ cart, onDeleteCartItem }) {
 			<tr className="cart-item d-table-row d-md-none">
 				<td>
 					<div className="cart-item-img-container">
-						<img
-							src={randomImg}
-							alt=""
-							className="cart-item-img"
-						/>
+						<img src={randomImg} alt="" className="cart-item-img" />
 					</div>
 				</td>
 				<td>
@@ -125,7 +128,11 @@ function CartItem({ cart, onDeleteCartItem }) {
 							</button>
 						</div>
 					</div>
-					<p className="cart-remove" onClick={() => onBeforeDeleteCartItem(cart)}>Retirer du panier</p>
+					{!disabled && (
+						<p className="cart-remove" onClick={() => onBeforeDeleteCartItem(cart)}>
+							Retirer du panier
+						</p>
+					)}
 				</td>
 			</tr>
 		</React.Fragment>

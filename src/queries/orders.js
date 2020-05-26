@@ -23,6 +23,29 @@ export const GET_ORDERS = gql`
 	}
 `;
 
+export const GET_SALES_ORDERS = gql`
+	{
+		order {
+			id
+			created_at
+			address_postal_code
+			address_line_1
+			address_country
+			address_city
+			order_items {
+				id
+				price
+				product {
+					brand
+					id
+					name
+					price_per_month
+				}
+			}
+		}
+	}
+`;
+
 export const ADD_ORDER = gql`
 	mutation addNewCommand {
 		insert_command(objects: { status: "awaiting for payement" }) {

@@ -23,6 +23,6 @@ describe("Profile", () => {
 		expect(company.name).toBeDefined().not.toBeNull();
 		expect(company.address).toBeDefined().not.toBeNull();
 		expect(company.phone).toBeDefined().not.toBeNull();
-		expect(company.SIRET).toBeDefined().not.toBeNull();
+		expect(company.siret).toBeDefined().not.toBeNull();
 	});
 });
