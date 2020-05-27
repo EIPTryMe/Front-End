@@ -23,7 +23,7 @@ export const GET_ORDERS = gql`
 	}
 `;
 
-export const GET_SALES_ORDERS = gql`
+export const GET_COMPANY_ORDERS = gql`
 	query getMyCompanyOrders($company_id: Int!) {
 		order(where: { order_items: { product: { company_id: { _eq: $company_id } } } }) {
 			id

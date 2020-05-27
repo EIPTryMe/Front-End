@@ -17,6 +17,7 @@ const DashboardPage = () => {
 		<Container className="company-dashboard">
 			<h1>Tableau de bord de mon entreprise</h1>
 			<Button variant="success" size="lg" as={NavLink} to={'/company/add_product'}>Mettre un produit en vente</Button>
+			<Button variant="success" size="lg" className="mt-3" as={NavLink} to={'/company/manage_product'}>Gérer mes produits</Button>
 			<Button variant="success" size="lg" className="mt-3" as={NavLink} to={'/company/sales'}>Afficher mes ventes</Button>
 		</Container>
 	);

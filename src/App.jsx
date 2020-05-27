@@ -17,6 +17,7 @@ import CheckoutCancelPage from "./pages/CheckoutLayout/CheckoutCancelPage";
 
 import DashboardPage from "./pages/CompanyLayout/DashboardPage";
 import AddProductPage from "./pages/CompanyLayout/AddProductPage";
+import ManageProductPage from "./pages/CompanyLayout/ManageProductPage";
 import SalesPage from "./pages/CompanyLayout/SalesPage";
 
 import { AppContextProvider } from "./contexts/AppContext";
@@ -72,6 +73,7 @@ const Routes = () => {
 
 				<AppPrivateRoute path="/company/dashboard" layout={CompanyLayout} component={DashboardPage} title="Mon entreprise | Dashboard" />
 				<AppPrivateRoute path="/company/add_product" layout={CompanyLayout} component={AddProductPage} title="Mon entreprise | Nouveau produit" />
+				<AppPrivateRoute path="/company/manage_product" layout={CompanyLayout} component={ManageProductPage} title="Mon entreprise | Gestion produits" />
 				<AppPrivateRoute path="/company/sales" layout={CompanyLayout} component={SalesPage} title="Mon entreprise | Mes ventes" />
 
 				<AppPrivateRoute path="/checkout/step-1" layout={CheckoutLayout} component={CheckoutOnePage} title="Etape 1" />

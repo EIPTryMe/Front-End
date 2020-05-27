@@ -18,7 +18,7 @@ import { NotificationManager } from "react-notifications";
 import useAppContext from "../../../../contexts/AppContext";
 
 function ProductItem(props) {
-	const { product, history } = props;
+	const { product, history, showDelete = false } = props;
 	const context = useAppContext();
 	const [isAdding, setIsAdding] = useState(false);
 
@@ -26,6 +26,10 @@ function ProductItem(props) {
 		ADD_TO_CART
 		//, { context: { headers: { toto: "titi" } } }  --- TO ADD CUSTOM HEADERS
 	);
+
+	const onDeleteProduct = (product) => {
+		console.log('del product');
+	}
 
 	const onAddCart = (product) => {
 		const { id: product_id } = product;
@@ -54,23 +58,28 @@ function ProductItem(props) {
 	return (
 		<Col xs="12" sm="6" md="4">
 			<Card className="product-card">
-				<Carousel
-					interval={null}
-				>
+				<Carousel interval={null}>
 					<Carousel.Item>
-						<Card.Img className="product-img"
+						<Card.Img
+							className="product-img"
 							variant="top"
-							src={product.picture ? product.picture.url : "https://via.placeholder.com/286x300/14213D/FFFFFF?text=Tryme+placeholder"}
+							src={
+								product.picture
+									? product.picture.url
+									: "https://via.placeholder.com/286x300/14213D/FFFFFF?text=Tryme+placeholder"
+							}
 						/>
 					</Carousel.Item>
 					<Carousel.Item>
-						<Card.Img className="product-img"
+						<Card.Img
+							className="product-img"
 							variant="top"
 							src="https://via.placeholder.com/286x300/FCA311/FFFFFF?text=Tryme+placeholder"
 						/>
 					</Carousel.Item>
 					<Carousel.Item>
-						<Card.Img className="product-img"
+						<Card.Img
+							className="product-img"
 							variant="top"
 							src="https://via.placeholder.com/286x300/000000/FFFFFF?text=Tryme+placeholder"
 						/>
@@ -88,14 +97,23 @@ function ProductItem(props) {
 					</Card.Text>
 					<Card.Text className="product-item-price">Stock: {product.stock}</Card.Text>
 				</Card.Body>
-				<Card.Footer>
-					{isAdding && <Spinner animation="border" variant="success" />}
-					{!isAdding && (
-						<Button variant="success" onClick={() => onAddCart(product)}>
-							Ajouter au panier <FontAwesomeIcon icon={faCartPlus} />
+				{!showDelete && (
+					<Card.Footer>
+						{isAdding && <Spinner animation="border" variant="success" />}
+						{!isAdding && (
+							<Button variant="success" onClick={() => onAddCart(product)}>
+								Ajouter au panier <FontAwesomeIcon icon={faCartPlus} />
+							</Button>
+						)}
+					</Card.Footer>
+				)}
+				{showDelete && (
+					<Card.Footer>
+						<Button variant="danger" onClick={() => onDeleteProduct(product)}>
+							Supprimer ce produit <FontAwesomeIcon icon={faCartPlus} />
 						</Button>
-					)}
-				</Card.Footer>
+					</Card.Footer>
+				)}
 			</Card>
 		</Col>
 	);

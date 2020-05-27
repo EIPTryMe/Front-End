@@ -9,7 +9,7 @@ import OrderList from '../../components/MainLayout/MyOrdersPage/OrderList';
 import LoadingComponent from "../../components/LoadingComponent";
 
 import { useQuery } from "@apollo/react-hooks";
-import { GET_SALES_ORDERS } from "../../queries/orders";
+import { GET_COMPANY_ORDERS } from "../../queries/orders";
 import { handleHttpError } from "../../utils/errorHandler";
 import { NavLink } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const SalesPage = () => {
 	const user = context.state ? context.state.user : null;
 
 	const [shouldExecute, executeQuery] = useState(false);
-	const { loading: isLoadingOrders, error, data } = useQuery(GET_SALES_ORDERS, {
+	const { loading: isLoadingOrders, error, data } = useQuery(GET_COMPANY_ORDERS, {
 		skip: !shouldExecute,
 		variables: {company_id: user && user.company ? user.company.id : null},
 		context: {headers: {"x-hasura-admin-secret": "aUCyUfhw8eNxR35se7IzQ4D1yEQvB8vu"}}
