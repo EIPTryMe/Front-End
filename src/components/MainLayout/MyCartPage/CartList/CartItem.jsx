@@ -56,7 +56,7 @@ function CartItem({ cart, onDeleteCartItem }) {
 				</td>
 				<td>
 					<div className="cart-item-unit-price-container">
-						<h3 className="cart-item-unit-price">Price</h3>
+						<h3 className="cart-item-unit-price">Prix</h3>
 						<p className="cart-item-unit-price-value">
 							{unit_price_per_month_formatted} €/mois
 						</p>
@@ -64,7 +64,7 @@ function CartItem({ cart, onDeleteCartItem }) {
 				</td>
 				<td>
 					<div className="cart-item-quantity-container">
-						<h3 className="cart-item-quantity">Quantity</h3>
+						<h3 className="cart-item-quantity">Quantité</h3>
 						<div className="cart-item-quantity-modifier">
 							<button type="button" className="cart-item-quantity-modifier-btn">
 								-
@@ -83,11 +83,11 @@ function CartItem({ cart, onDeleteCartItem }) {
 				</td>
 				<td>
 					<div className="cart-item-total-price-container">
-						<h3 className="cart-item-total-price">Total Price</h3>
+						<h3 className="cart-item-total-price">Prix total</h3>
 						<p className="cart-item-total-price-value">
 							{total_price_per_month_formatted} €/mois
 						</p>
-						<p className="cart-item-duration">for {cart.duration} Months</p>
+						<p className="cart-item-duration">Pour {cart.duration} Mois</p>
 					</div>
 				</td>
 			</tr>
@@ -109,15 +109,15 @@ function CartItem({ cart, onDeleteCartItem }) {
 					</div>
 					<div className="cart-item-unit-price-container cart-item-total-price-container">
 						<div className="d-flex flex-row align-items-center">
-							<h3 className="cart-item-unit-price mr-1">Price : </h3>
+							<h3 className="cart-item-unit-price mr-1">Prix : </h3>
 							<p className="cart-item-unit-price-value">
 								{unit_price_per_month_formatted} €/mois
 							</p>
 						</div>
-						<p className="cart-item-duration">for {cart.duration} Months</p>
+						<p className="cart-item-duration">pour {cart.duration} Mois</p>
 					</div>
 					<div className="cart-item-quantity-container">
-						<h3 className="cart-item-quantity">Quantity</h3>
+						<h3 className="cart-item-quantity">Quantité</h3>
 						<div className="cart-item-quantity-modifier">
 							<button type="button" className="cart-item-quantity-modifier-btn">
 								-

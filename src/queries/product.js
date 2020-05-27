@@ -9,6 +9,10 @@ export const GET_PRODUCTS = gql`
 			name
 			stock
 			price_per_month
+			picture {
+				id
+				url
+			}
 			product_descriptions {
 				id
 				name

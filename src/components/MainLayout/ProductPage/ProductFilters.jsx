@@ -3,9 +3,8 @@ import React, { useState, useCallback } from "react";
 import ReactSlider from "react-slider";
 import ProductFilterGroup from "./ProductFilters/ProductFilterGroup";
 
+import {sliderMin, sliderMax} from "../../../constants/productFilters";
 
-const sliderMin = 0;
-const sliderMax = 350;
 
 function ProductFilters(props) {
 	const [priceRange, setPriceRange] = useState([sliderMin, sliderMax]);
@@ -17,18 +16,37 @@ function ProductFilters(props) {
 		<div className="product-filters">
 			<h2 className="Title">Filtrer</h2>
 
-			<ProductFilterGroup title="Trier par :" inputClasses={['order-by']}>
+			<ProductFilterGroup title="Trier par :" inputClasses={["order-by"]}>
 				<label>
-					<input type="radio" name="sort-by" value="popular_desc" onChange={onChangeOrderBy}/> Plus populaire
+					<input
+						type="radio"
+						name="sort-by"
+						value="popular_desc"
+						onChange={onChangeOrderBy}
+					/>{" "}
+					Plus populaire
 				</label>
 				<label>
-					<input type="radio" name="sort-by" value="price_asc" onChange={onChangeOrderBy}/> Prix croissant
+					<input
+						type="radio"
+						name="sort-by"
+						value="price_asc"
+						onChange={onChangeOrderBy}
+					/>{" "}
+					Prix croissant
 				</label>
 				<label>
-					<input type="radio" name="sort-by" value="price_desc" onChange={onChangeOrderBy}/> Prix décroissant
+					<input
+						type="radio"
+						name="sort-by"
+						value="price_desc"
+						onChange={onChangeOrderBy}
+					/>{" "}
+					Prix décroissant
 				</label>
 				<label>
-					<input type="radio" name="sort-by" value="new" onChange={onChangeOrderBy}/> Nouveautés
+					<input type="radio" name="sort-by" value="new" onChange={onChangeOrderBy} />{" "}
+					Nouveautés
 				</label>
 			</ProductFilterGroup>
 			<ProductFilterGroup title="Prix par mois :">
@@ -46,10 +64,11 @@ function ProductFilters(props) {
 					ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
 					renderThumb={(props, state) => <div {...props}></div>}
 					pearling
-					minDistance={10}
+					minDistance={5}
 				/>
 				<div className="">
-					{priceRange[0]}€ - {priceRange[1]}€
+					{priceRange[0]}€ - {priceRange[1]}
+					{priceRange[1] === sliderMax && <sup>+</sup>}€
 				</div>
 			</ProductFilterGroup>
 		</div>

@@ -1,9 +1,14 @@
 import { useState, useCallback } from "react";
 
+import {sliderMax} from "../constants/productFilters";
+
 function useProductFilter() {
 	const [filters, setFilters] = useState({});
 
 	const onAfterChangePriceRange = useCallback(([min, max]) => {
+        if (max === sliderMax) {
+            max = null;
+        }
 		const newFilters = {
 			...filters,
 			where: {

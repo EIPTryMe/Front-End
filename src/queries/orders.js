@@ -24,15 +24,15 @@ export const GET_ORDERS = gql`
 `;
 
 export const GET_SALES_ORDERS = gql`
-	{
-		order {
+	query getMyCompanyOrders($company_id: Int!) {
+		order(where: { order_items: { product: { company_id: { _eq: $company_id } } } }) {
 			id
 			created_at
 			address_postal_code
 			address_line_1
 			address_country
 			address_city
-			order_items {
+			order_items(where: { product: { company_id: { _eq: $company_id } } }) {
 				id
 				price
 				product {
@@ -55,27 +55,6 @@ export const ADD_ORDER = gql`
 				status
 				updated_at
 			}
-		}
-	}
-`;
-
-export const UPDATE_ORDER = gql`
-	mutation updateCommandById {
-		update_command(where: { id: { _eq: 1 } }, _set: { status: "Delivered" }) {
-			returning {
-				updated_at
-				status
-				id
-				created_at
-			}
-		}
-	}
-`;
-
-export const DELETE_ORDER = gql`
-	mutation updateCommandById {
-		delete_command(where: { id: { _eq: 2 } }) {
-			affected_rows
 		}
 	}
 `;

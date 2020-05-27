@@ -56,23 +56,21 @@ function ProductItem(props) {
 			<Card className="product-card">
 				<Carousel
 					interval={null}
-					onClick={goToProductDetails}
-					style={{ cursor: "pointer" }}
 				>
 					<Carousel.Item>
-						<Card.Img
+						<Card.Img className="product-img"
 							variant="top"
-							src="https://via.placeholder.com/286x300/14213D/FFFFFF?text=Tryme+placeholder"
+							src={product.picture ? product.picture.url : "https://via.placeholder.com/286x300/14213D/FFFFFF?text=Tryme+placeholder"}
 						/>
 					</Carousel.Item>
 					<Carousel.Item>
-						<Card.Img
+						<Card.Img className="product-img"
 							variant="top"
 							src="https://via.placeholder.com/286x300/FCA311/FFFFFF?text=Tryme+placeholder"
 						/>
 					</Carousel.Item>
 					<Carousel.Item>
-						<Card.Img
+						<Card.Img className="product-img"
 							variant="top"
 							src="https://via.placeholder.com/286x300/000000/FFFFFF?text=Tryme+placeholder"
 						/>

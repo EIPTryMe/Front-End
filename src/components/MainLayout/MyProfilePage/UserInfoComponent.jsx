@@ -160,7 +160,7 @@ const UserInfoComponent = () => {
 								type="text"
 								name="address"
 								className="line-content"
-								placeholder={"Addresse"}
+								placeholder={"Adresse"}
 								value={values.address}
 								onChange={(e) => setFieldTouched("address") && handleChange(e)}
 								isInvalid={touched.address && !!errors.address}

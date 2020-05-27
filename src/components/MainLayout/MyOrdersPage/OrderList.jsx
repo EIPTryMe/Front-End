@@ -7,7 +7,7 @@ export default class OrderList extends Component {
 		const { orders } = this.props;
 
 		return (
-			<div>
+			<div className="w-100">
 				<Table striped bordered hover responsive="lg" variant="dark">
 					<thead>
 						<tr>
