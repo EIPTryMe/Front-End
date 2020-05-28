@@ -18,13 +18,8 @@ function buildDevCarts(carts) {
 	return carts.map((cart) => {
 		if (!cart.quantity) cart.quantity = 1 || Math.floor(Math.random() * 4) + 1;
 		if (!cart.duration) cart.duration = 6;
-		if (!cart.product.product_descriptions || cart.product.product_descriptions.length === 0)
-			cart.product.product_descriptions = [
-				{
-					name:
-						'13.3" Display, Intel® i3-1000NG4 Processor, 8GB Memory, 256GB SSD Storage',
-				},
-			];
+		if (!cart.product.description)
+			cart.product.description = '13.3" Display, Intel® i3-1000NG4 Processor, 8GB Memory, 256GB SSD Storage';
 		return cart;
 	});
 }

@@ -8,6 +8,7 @@ export const GET_PRODUCTS = gql`
 			brand
 			name
 			stock
+			description
 			price_per_month
 			picture {
 				id
@@ -33,6 +34,7 @@ export const GET_COMPANY_PRODUCTS = gql`
 			brand
 			name
 			stock
+			description
 			price_per_month
 			picture {
 				id

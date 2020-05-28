@@ -76,7 +76,7 @@ function ProductDetailsComponent(props) {
 								{product.brand}
 							</Card.Subtitle>
 							<Card.Text className="product-item-description">
-								{product.product_descriptions.name || "Description placeholder"}
+								{product.description || "Description placeholder"}
 							</Card.Text>
 							<Card.Text className="product-item-price">
 								A partir de <b>€{price_per_month_formatted}</b> par mois

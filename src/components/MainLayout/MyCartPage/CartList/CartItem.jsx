@@ -41,14 +41,14 @@ function CartItem({ cart, onDeleteCartItem }) {
 			<tr className="cart-item d-none d-md-table-row">
 				<td>
 					<div className="cart-item-img-container">
-						<img src={randomImg} alt="" className="cart-item-img" />
+						<img src={cart.product.picture ? cart.product.picture.url : randomImg} alt="" className="cart-item-img" />
 					</div>
 				</td>
 				<td>
 					<div className="cart-item-description-container">
 						<h3 className="cart-item-name">{cart.product.name}</h3>
 						<p className="cart-item-description">
-							{cart.product.product_descriptions[0].name}
+							{cart.product.description}
 						</p>
 						{/* <p className="cart-item-stock">stock</p> */}
 						<p className="cart-item-reference">ID Produit: #{cart.product.id}</p>
@@ -102,7 +102,7 @@ function CartItem({ cart, onDeleteCartItem }) {
 					<div className="cart-item-description-container">
 						<h3 className="cart-item-name">{cart.product.name}</h3>
 						<p className="cart-item-description">
-							{cart.product.product_descriptions[0].name}
+							{cart.product.description}
 						</p>
 						{/* <p className="cart-item-stock">stock</p> */}
 						{/* <p className="cart-item-reference">ID Produit: #{cart.product.id}</p> */}

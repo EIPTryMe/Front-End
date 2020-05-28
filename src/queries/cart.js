@@ -24,6 +24,11 @@ export const GET_CARTS = gql`
 				id
 				brand
 				name
+				description
+				picture {
+					id
+					url
+				}
 				price_per_month
 				product_descriptions {
 					id
