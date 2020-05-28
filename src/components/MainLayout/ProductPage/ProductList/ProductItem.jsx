@@ -16,10 +16,13 @@ import formatPrice from "../../../../utils/formatPrice";
 import { NotificationManager } from "react-notifications";
 
 import useAppContext from "../../../../contexts/AppContext";
+import { useAuth0 } from "../../../../hooks/auth0";
+
 
 function ProductItem(props) {
-	const { product, history, showDelete = false } = props;
+	const { product, history, showDelete = false, onDeleteProduct = () => {} } = props;
 	const context = useAppContext();
+	const { loading, isAuthenticated, loginWithRedirect } = useAuth0();
 	const [isAdding, setIsAdding] = useState(false);
 
 	const [addToCart] = useMutation(
@@ -27,9 +30,7 @@ function ProductItem(props) {
 		//, { context: { headers: { toto: "titi" } } }  --- TO ADD CUSTOM HEADERS
 	);
 
-	const onDeleteProduct = (product) => {
-		console.log('del product');
-	}
+	
 
 	const onAddCart = (product) => {
 		const { id: product_id } = product;
@@ -55,6 +56,8 @@ function ProductItem(props) {
 
 	const goToProductDetails = () => history.push("/products/" + product.id, { product: product });
 
+	if (loading)
+		return null;
 	return (
 		<Col xs="12" sm="6" md="4">
 			<Card className="product-card">
@@ -101,7 +104,7 @@ function ProductItem(props) {
 					<Card.Footer>
 						{isAdding && <Spinner animation="border" variant="success" />}
 						{!isAdding && (
-							<Button variant="success" onClick={() => onAddCart(product)}>
+							<Button variant="success" onClick={() => isAuthenticated ? onAddCart(product) : loginWithRedirect({redirect_uri: window.location.origin + '/products'})}>
 								Ajouter au panier <FontAwesomeIcon icon={faCartPlus} />
 							</Button>
 						)}

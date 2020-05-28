@@ -62,3 +62,11 @@ export const PRODUCT_ADD = gql`
 		}
 	}
 `;
+
+export const PRODUCT_DELETE = gql`
+	mutation DeleteProduct($product_id: Int!) {
+		delete_product_by_pk(id: $product_id) {
+			id
+		}
+	}
+`;
