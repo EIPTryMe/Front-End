@@ -22,6 +22,7 @@ const schema = Yup.object({
 	stock: Yup.number().min(1).required(),
 	price_per_month: Yup.number().min(5).required(),
 	company_id: Yup.number().nullable(),
+	description: Yup.string()
 });
 
 const SalesPage = () => {
@@ -41,6 +42,7 @@ const SalesPage = () => {
 		stock: 0,
 		price_per_month: 0,
 		company_id: user.company ? user.company.id : null,
+		description: ""
 	};
 
 	const onSubmit = (values) => {
@@ -97,6 +99,20 @@ const SalesPage = () => {
 									onChange={(e) => setFieldTouched("name") && handleChange(e)}
 									isInvalid={touched.name && !!errors.name}
 									isValid={touched.name && !errors.name}
+								/>
+							</Form.Group>
+						</Form.Row>
+						<Form.Row>
+							<Form.Group as={Col}>
+								<Form.Label>Description produit:</Form.Label>
+								<Form.Control
+									type="text"
+									name="description"
+									placeholder={"Description du produit"}
+									value={values.description}
+									onChange={(e) => setFieldTouched("description") && handleChange(e)}
+									isInvalid={touched.description && !!errors.description}
+									isValid={touched.description && !errors.description}
 								/>
 							</Form.Group>
 						</Form.Row>

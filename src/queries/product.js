@@ -53,12 +53,13 @@ export const GET_COMPANY_PRODUCTS = gql`
 `;
 
 export const PRODUCT_ADD = gql`
-	mutation AddProduct($stock: Int!, $name: String!, $price_per_month: float8!, $company_id: Int) {
+	mutation AddProduct($stock: Int!, $name: String!, $price_per_month: float8!, $company_id: Int, $description: String) {
 		createProduct(
 			stock: $stock
 			name: $name
 			price_per_month: $price_per_month
-			company_id: $company_id
+			company_id: $company_id,
+			description: $description
 		) {
 			id
 		}
