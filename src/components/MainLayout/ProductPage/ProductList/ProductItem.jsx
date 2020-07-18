@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMutation } from "@apollo/react-hooks";
+import ReactStars from "react-rating-stars-component";
 
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
@@ -18,7 +19,6 @@ import { NotificationManager } from "react-notifications";
 import useAppContext from "../../../../contexts/AppContext";
 import { useAuth0 } from "../../../../hooks/auth0";
 
-
 function ProductItem(props) {
 	const { product, history, showDelete = false, onDeleteProduct = () => {} } = props;
 	const context = useAppContext();
@@ -29,8 +29,6 @@ function ProductItem(props) {
 		ADD_TO_CART
 		//, { context: { headers: { toto: "titi" } } }  --- TO ADD CUSTOM HEADERS
 	);
-
-	
 
 	const onAddCart = (product) => {
 		const { id: product_id } = product;
@@ -56,8 +54,19 @@ function ProductItem(props) {
 
 	const goToProductDetails = () => history.push("/products/" + product.id, { product: product });
 
-	if (loading)
-		return null;
+	const averageRating = useMemo(() => {
+		if (!product) return null;
+		const {
+			aggregate: {
+				avg: { score },
+				count,
+			},
+		} = product.reviews_aggregate;
+
+		return { score, count };
+	}, [product]);
+
+	if (loading) return null;
 	return (
 		<Col xs="12" sm="6" md="4">
 			<Card className="product-card">
@@ -98,13 +107,34 @@ function ProductItem(props) {
 					<Card.Text className="product-item-price">
 						A partir de <b>€{price_per_month_formatted}</b> par mois
 					</Card.Text>
+					<div className="rating-container">
+						<Card.Text>Note moyenne:</Card.Text>
+						<div className="d-flex align-items-center">
+							<ReactStars
+								count={5}
+								size={24}
+								activeColor="#ffd700"
+								value={averageRating.score}
+								isHalf={true}
+								edit={false}
+							/>
+							<span className="rating-count">({averageRating.count} avis)</span>
+						</div>
+					</div>
 					<Card.Text className="product-item-price">Stock: {product.stock}</Card.Text>
 				</Card.Body>
 				{!showDelete && (
 					<Card.Footer>
 						{isAdding && <Spinner animation="border" variant="success" />}
 						{!isAdding && (
-							<Button variant="success" onClick={() => isAuthenticated ? onAddCart(product) : loginWithRedirect({redirect_uri: window.location.origin + '/products'})}>
+							<Button
+								variant="success"
+								onClick={() =>
+									isAuthenticated
+										? onAddCart(product)
+										: loginWithRedirect({ redirect_uri: window.location.origin + "/products" })
+								}
+							>
 								Ajouter au panier <FontAwesomeIcon icon={faCartPlus} />
 							</Button>
 						)}

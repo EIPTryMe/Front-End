@@ -57,6 +57,18 @@
 		}
 		.product-img {
 		}
+
+		.rating-container {
+			.card-text {
+				font-size: 12px;
+				margin-bottom: 0;
+				position: relative;
+				top: 6px;
+			}
+			.rating-count {
+				font-size: 10px;
+			}
+		}
 	}
 
 	@include media-breakpoint-down(sm) {

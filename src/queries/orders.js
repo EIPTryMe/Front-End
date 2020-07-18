@@ -18,6 +18,9 @@ export const GET_ORDERS = gql`
 					name
 					price_per_month
 				}
+				review {
+					description
+				}
 			}
 		}
 	}
