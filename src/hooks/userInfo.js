@@ -25,6 +25,7 @@ function useUserInfo(user) {
 			const builtUser = {
 				picture: user.picture,
 				uid: user.sub,
+				id: userInfo[0].id,
 				firstname: userInfo[0].first_name,
 				email: userInfo[0].email,
 				name: userInfo[0].name,
