@@ -4,7 +4,7 @@ import Table from "react-bootstrap/Table";
 
 export default class OrderList extends Component {
 	render() {
-		const { orders } = this.props;
+		const { orders, history } = this.props;
 
 		return (
 			<div className="w-100">
@@ -17,8 +17,8 @@ export default class OrderList extends Component {
 						</tr>
 					</thead>
 				</Table>
-				{orders.map((order, index) => (
-					<OrderItem key={`order-${order.id}`} order={order} />
+				{orders.map((order) => (
+					<OrderItem key={`order-${order.id}`} order={order} history={history} />
 				))}
 			</div>
 		);

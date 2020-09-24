@@ -10,6 +10,7 @@ import ProductDetailsPage from "./pages/MainLayout/ProductDetailsPage";
 import MyCartPage from "./pages/MainLayout/MyCartPage";
 import MyProfilePage from "./pages/MainLayout/MyProfilePage";
 import MyOrdersPage from "./pages/MainLayout/MyOrdersPage";
+import TrackDeliveryPage from "./pages/MainLayout/TrackDeliveryPage";
 
 import CheckoutOnePage from "./pages/CheckoutLayout/CheckoutOnePage";
 import CheckoutSuccessPage from "./pages/CheckoutLayout/CheckoutSuccessPage";
@@ -70,6 +71,7 @@ const Routes = () => {
 				<AppRoute path="/products/:product_id" layout={MainLayout} component={ProductDetailsPage} title="Détail produit" />
 				<AppPrivateRoute path="/profile/me" layout={MainLayout} component={MyProfilePage} title="Mon profil" />
 				<AppPrivateRoute path="/profile/orders" layout={MainLayout} component={MyOrdersPage} title="Mes commandes" />
+				<AppPrivateRoute path="/track_delivery/:order_id" layout={MainLayout} component={TrackDeliveryPage} title="Suivre mon colis" />
 
 				<AppPrivateRoute path="/company/dashboard" layout={CompanyLayout} component={DashboardPage} title="Mon entreprise | Dashboard" />
 				<AppPrivateRoute path="/company/add_product" layout={CompanyLayout} component={AddProductPage} title="Mon entreprise | Nouveau produit" />

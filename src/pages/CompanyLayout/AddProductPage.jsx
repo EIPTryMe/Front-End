@@ -8,6 +8,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 
+import UploadImageComponent from "../../components/CompanyLayout/AddProductPage/UploadImageComponent"
+
 import { useMutation } from "@apollo/react-hooks";
 import { PRODUCT_ADD } from "../../queries/product";
 import { NotificationManager } from "react-notifications";
@@ -41,11 +43,14 @@ const SalesPage = () => {
 		name: "",
 		stock: 0,
 		price_per_month: 0,
-		company_id: user.company ? user.company.id : null,
+		company_id: user.company ? user.company.id : "",
 		description: ""
 	};
 
 	const onSubmit = (values) => {
+		if (!values.company_id) {
+			values.company_id = null;
+		}
 		addProduct({ variables: values })
 			.then((data) => {
 				NotificationManager.success(
@@ -88,6 +93,7 @@ const SalesPage = () => {
 							name="company_id"
 							value={values.company_id}
 						/>
+						<UploadImageComponent />
 						<Form.Row>
 							<Form.Group as={Col}>
 								<Form.Label>Nom du produit:</Form.Label>
