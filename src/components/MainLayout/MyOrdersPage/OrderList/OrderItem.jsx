@@ -2,19 +2,22 @@ import React, { Component } from "react";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 
-import SetReviewComponent from './SetReviewComponent';
+import SetReviewComponent from "./SetReviewComponent";
 import formatPrice from "../../../../utils/formatPrice";
 
 export default class Order extends Component {
 	render() {
-		const { order } = this.props;
+		const { order, history } = this.props;
 
 		const created_at = new Date(order.created_at);
 
 		const formattedAddress = `${order.address_line_1}, ${order.address_city} ${order.address_postal_code}, ${order.address_country}`;
 
 		const sum = formatPrice(order.order_items.reduce((sum, orderItem) => sum + orderItem.price, 0));
+
+		const goToTrackDelivery = () => history.push(`/track_delivery/${order.id}`);
 
 		return (
 			<Accordion>
@@ -26,6 +29,13 @@ export default class Order extends Component {
 					</Card.Header>
 					<Accordion.Collapse eventKey="0">
 						<Card.Body>
+							{order.order_deliveries &&
+								order.order_deliveries[0] &&
+								order.order_deliveries[0].delivery_status === "pending" && (
+									<Button variant="light" className="mb-2" onClick={goToTrackDelivery}>
+										Suivre mon colis
+									</Button>
+								)}
 							<Card.Text className="mb-2">Adresse de facturation: {formattedAddress}</Card.Text>
 							<Table striped bordered hover responsive="lg" variant="dark">
 								<thead>
@@ -53,7 +63,7 @@ export default class Order extends Component {
 												<td>{order_item.price}€</td>
 												<td>
 													{!order_item.review ? (
-														<SetReviewComponent orderItem={order_item}/>
+														<SetReviewComponent orderItem={order_item} />
 													) : (
 														<p>{reviewDescription}</p>
 													)}

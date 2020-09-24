@@ -22,6 +22,11 @@ export const GET_ORDERS = gql`
 					description
 				}
 			}
+			order_deliveries {
+				delivery_status
+				lat
+				lng
+			}
 		}
 	}
 `;
@@ -86,6 +91,15 @@ export const PAY_ORDER = gql`
 			order_id
 			status
 			stripe_id
+		}
+	}
+`;
+
+export const GET_ORDER_DELIVERY = gql`
+	query getOrderDelivery($order_id: Int!) {
+		order_delivery(where: { order_id: { _eq: $order_id } }) {
+			lat
+			lng
 		}
 	}
 `;

@@ -82,6 +82,9 @@ const NavBar = (props) => {
 								<NavDropdown.Item as={NavLink} exact to="/profile/me">
 									Mon profil
 								</NavDropdown.Item>
+								<NavDropdown.Item as={NavLink} exact to="/profile/chat">
+									Mon Chat
+								</NavDropdown.Item>
 								<NavDropdown.Item as={NavLink} exact to="/profile/orders">
 									Mes commandes
 								</NavDropdown.Item>

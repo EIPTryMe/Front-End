@@ -9,12 +9,14 @@ const ProductDetailsPage = ({ location, ...props }) => {
 	const state = location.state;
 	const product = state ? state.product : null;
 
+	const { history } = props;
+
 	return (
 		<div className="my-products">
 			<Container className="product-detail">
 				<Button variant="info" className="mt-4 mb-4" to="/products" as={NavLink}>Retour à la liste des produits</Button>
 
-				<ProductDetailsComponent product={product} />
+				<ProductDetailsComponent product={product} history={history} />
 			</Container>
 		</div>
 	);

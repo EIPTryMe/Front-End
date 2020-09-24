@@ -29,6 +29,8 @@ const MyCartPage = ({history}) => {
 		history.push('/checkout/step-1');
 	};
 
+	console.log(carts);
+
 	if (isLoadingCart) {
 		return <LoadingComponent />;
 	} else if (error) {

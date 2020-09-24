@@ -31,7 +31,7 @@ function useUserInfo(user) {
 				name: userInfo[0].name,
 				phone: userInfo[0].phone,
 				address: userInfo[0].address,
-				company: userInfo[0].company,
+				company: userInfo[0].company
 			};
 			context.setUser(builtUser);
 			context.changeParams({ cartLength: userInfo[0].cartsUid.length });

@@ -20,6 +20,13 @@ export const GET_CARTS = gql`
 	query getAllCart {
 		cart {
 			id
+			promo {
+				id
+				code
+				discount_value
+				expiry_date
+				remaining_count
+			}
 			product {
 				id
 				brand
