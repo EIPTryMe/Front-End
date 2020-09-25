@@ -1,9 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
 
-$green: #86BB71;
-$blue: #94C2ED;
-$orange: #E38968;
-$gray: #92959E;
+$green-2: #86BB71;
+$blue-2: #94C2ED;
+$orange-2: #E38968;
+$gray-2: #92959E;
 
 .my-chat {
   *, *:before, *:after {
@@ -77,7 +77,7 @@ $gray: #92959E;
     }
 
     .status {
-      color: $gray;
+      color: $gray-2;
     }
 
   }
@@ -113,7 +113,7 @@ $gray: #92959E;
       }
 
       .chat-num-messages {
-        color: $gray;
+        color: $gray-2;
       }
 
       .fa-star {
@@ -135,7 +135,7 @@ $gray: #92959E;
       }
 
       .message-data-time {
-        color: lighten($gray, 8%);
+        color: lighten($gray-2, 8%);
         padding-left: 6px;
       }
 
@@ -158,21 +158,21 @@ $gray: #92959E;
           width: 0;
           position: absolute;
           pointer-events: none;
-          border-bottom-color: $green;
+          border-bottom-color: $green-2;
           border-width: 10px;
           margin-left: -10px;
         }
       }
 
       .my-message {
-        background: $green;
+        background: $green-2;
       }
 
       .other-message {
-        background: $blue;
+        background: $blue-2;
 
         &:after {
-          border-bottom-color: $blue;
+          border-bottom-color: $blue-2;
           left: 93%;
         }
       }
@@ -202,7 +202,7 @@ $gray: #92959E;
 
       button {
         float: right;
-        color: $blue;
+        color: $blue-2;
         font-size: 16px;
         text-transform: uppercase;
         border: none;
@@ -211,7 +211,7 @@ $gray: #92959E;
         background: #F2F5F8;
 
         &:hover {
-          color: darken($blue, 7%);
+          color: darken($blue-2, 7%);
         }
       }
     }
@@ -223,15 +223,15 @@ $gray: #92959E;
   }
 
   .online {
-    color: $green;
+    color: $green-2;
   }
 
   .offline {
-    color: $orange;
+    color: $orange-2;
   }
 
   .me {
-    color: $blue;
+    color: $blue-2;
   }
 
   .align-left {
